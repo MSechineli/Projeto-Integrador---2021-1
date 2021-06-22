@@ -9,6 +9,6 @@ A proposta é um aplicativo desktop para organização de tarefas.
 
 ### Calendário.
 ### To Do List.
-### Mostrar no calendário os eventos.
+### Mostrar os eventos no calendário.
 ### Notificações dos eventos quando estiver próximo do horário.
 ### Mostrar diferentes visualizações do calendário (dia, semana, mês, ano).
