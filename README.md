@@ -1,14 +1,35 @@
-# Projeto-Integrador---2021-1
-Projeto desenvolvido para disciplina de Projeto Integrador
+## Electron + TypeScript + React
 
-## Proposta do projeto
+Boilerplate for a project using Electron, React and Typescript.
 
-A proposta é um aplicativo desktop para organização de tarefas podendo ver as tarefas do dia, semana e mês.
+## Installation
 
-## Propostas de funcionalidades
+Use a package manager of your choice (npm, yarn, etc.) in order to install all dependencies
 
-### Calendário, mostrar diferentes visualizações de um calendário (dia, semana, mês).
-### To Do List (lista de afazeres).
-### Mostrar os eventos no calendário.
-### Notificações dos eventos quando estiver próximo do horário.
+```bash
+yarn
+```
 
+## Usage
+
+Just run `start` script.
+
+```bash
+yarn start
+```
+
+## Packaging
+
+To generate the project package based on the OS you're running on, just run:
+
+```bash
+yarn package
+```
+
+## Contributing
+
+Pull requests are always welcome 😃.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
