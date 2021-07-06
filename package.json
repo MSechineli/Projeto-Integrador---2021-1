@@ -15,9 +15,11 @@
   "keywords": [],
   "license": "MIT",
   "dependencies": {
+    "knex": "^0.95.6",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hot-loader": "4.13.0",
+    "sqlite3": "^5.0.2",
     "styled-components": "5.3.0"
   },
   "devDependencies": {
