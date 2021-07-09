@@ -1,10 +1,11 @@
 {
-  "name": "electron-react-typescript",
-  "author": "Diego Fernandes <diego.schell.f@gmail.com>",
+  "name": "electron",
+  "author": "Matheus H Sechineli, Lucas Donadi e Victor Daniel Manfrini",
   "version": "2.0.0",
   "description": "An Electron boilerplate including TypeScript, React, Jest and ESLint.",
   "main": "./.webpack/main/index.js",
   "scripts": {
+    "make:windows": "electron-forge make --platform=win32",
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
@@ -66,8 +67,8 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "name": "Electron starter",
-        "executableName": "electron-starter",
+        "name": "electron",
+        "executableName": "electron",
         "icon": "assets/icon",
         "extraResource": [
           "assets"
@@ -98,7 +99,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "Electron Starter"
+            "name": "electron"
           }
         },
         {
