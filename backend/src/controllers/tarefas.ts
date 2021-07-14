@@ -4,11 +4,10 @@ import { connection } from '../database/connection';
 class Tarefas {
     async create(req: Request, res: Response){
         const {nome, descricao, data} = req.body;
-        const teste = Date.UTC(2021, 6, 20);
         const ret = await connection('Tarefas').insert({
             nome, 
             descricao,
-            data: teste
+            data
         })
         console.log(ret)
         return res.send({
@@ -24,10 +23,14 @@ class Tarefas {
         return response.send(dados);
     }
     async update(request: Request, response: Response){
-        return response.json("NADA");;
+        const { id, nome, descricao, data} = request.body
+        const alterado = await connection('Tarefas').where({id}).update({nome, descricao, data})
+        return response.json(alterado);
     }
     async delete(request: Request, response: Response){
-        return response.json("NADA");
+        const { id } = request.body
+        const removido = await connection('Tarefas').delete(id);
+        return response.json(removido);
     }
 }
 
