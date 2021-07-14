@@ -3,7 +3,7 @@ Projeto desenvolvido para disciplina de Projeto Integrador
 
 ## Proposta do projeto
 
-A proposta é um aplicativo desktop para organização de tarefas podendo ver as tarefas do dia, semana e mês.
+A proposta é um aplicativo web para organização de tarefas podendo ver as tarefas do dia, semana e mês.
 
 ## Propostas de funcionalidades
 
