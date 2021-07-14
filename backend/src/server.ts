@@ -1,12 +1,11 @@
 import express from "express";
-
+import routes from "./router";
 const app = express();
 
-app.get('/', (request, response) =>
-  response.json({
-    message: 'Meu server Express, Typescript e ESLint!',
-  }),
-);
-app.listen(3333, () => {
-  console.log('Back-end started in 3333 port!');
-});
+app.use(express.json());
+app.use(routes);
+app.get('/', (req, res) => {
+  return res.json("OLA")
+})
+
+app.listen(3333);
