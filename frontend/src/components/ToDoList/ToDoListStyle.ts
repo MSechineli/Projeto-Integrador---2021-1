@@ -33,3 +33,25 @@ export const TaskTitle = styled.h2`
   margin: 0;
   text-align: left;
 `
+
+export const Button = styled.button`
+font-size: 1em;
+margin: 1em;
+padding: 0.25em 1em;
+border-radius: 6px;
+position: absolute;
+right: 69%;;
+bottom: 1%;
+margin-right: 10px;
+margin-bottom: 15px;
+
+/* Color the border and text with theme.main */
+color: ${props => props.theme.main};
+border: 2px solid ${props => props.theme.main};
+`;
+
+Button.defaultProps = {
+  theme: {
+    main: "palevioletred"
+  }
+}

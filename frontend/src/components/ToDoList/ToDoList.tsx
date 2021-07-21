@@ -1,5 +1,5 @@
 import React from 'react'
-import { Title, Box, ContainerTask, ListTask } from './ToDoListStyle'
+import { Title, Box, ContainerTask, ListTask, Button } from './ToDoListStyle'
 
 
 
@@ -42,8 +42,10 @@ const ToDoList: React.FC = () => {
     <Box>
       <Title>Tasks</Title>
       <ListTask>{listaDeTarefas}</ListTask>
+      <Button>Criar tarefa</Button>
     </Box>
   )
+  
 }
 
 export default ToDoList
