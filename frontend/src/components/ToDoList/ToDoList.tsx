@@ -1,48 +1,53 @@
-import React from 'react'
-import { Title, Box, ContainerTask, ListTask, Button } from './ToDoListStyle'
+import React, { useEffect, useState } from 'react'
+import { Title, Box, ContainerTask, ListTask, Button, TaskTitle } from './ToDoListStyle'
+import axios, { AxiosResponse } from 'axios'
 
-
+interface TypeTarefa{
+  id: Number;
+  nome: String;
+  descricao: String;
+  data: String;
+}
 
 const ToDoList: React.FC = () => {
+  const [dados, setDados] = useState<TypeTarefa[]>([]);
+  const [update, setUpdate] = useState(false);
 
-  var teste = [
-    {
-      id: 1,
-      nome: "Tarefas1",
-      descricao: "Fazer funcionar",
-      data: "11/07/2017"
-    },
-    {
-      id: 2,
-      nome: "Tarefas2",
-      descricao: "Fazer funcionar",
-      data: "11/07/2017"
-    },
-    {
-      id: 3,
-      nome: "Tarefas3",
-      descricao: "Fazer funcionar",
-      data: "11/07/2017"
+  useEffect(() => {
+    async function getTarefas(){
+      await axios.get("http://localhost:3333/tarefas").then((response: AxiosResponse) =>{
+        setDados(response.data);
+      }).catch((err) => console.log(err));
     }
-  ]
+    getTarefas()
+  }, [update])
 
-  let listaDeTarefas = teste.map((tarefa) => {
-    var color = tarefa.id%2 ? "#DBE6FD" : "#0055ff"
+  async function AddTarefa(){
 
-    return (
-      <ContainerTask key={tarefa.id.toString()}>
-        <input type="checkbox"></input>
-        <p style={{color: color}}>{tarefa.nome}</p>
-        
-      </ContainerTask>
-    )
-  }) 
+    await axios.post("http://localhost:3333/tarefas", {
+      nome: "Veio do front",
+      descricao: "Ihul",
+      data:"2a3s1das321d"
+    }).then((response:AxiosResponse) => {
+      setUpdate(!update);
+    })
+  }
+
   
+
+
   return (
     <Box>
       <Title>Tasks</Title>
-      <ListTask>{listaDeTarefas}</ListTask>
-      <Button>Criar tarefa</Button>
+      <ListTask>{dados.map((tarefa:TypeTarefa) => {
+        return (
+          <ContainerTask key={tarefa.id.toString()}>
+            <input type="checkbox"></input>
+            <TaskTitle>{tarefa.nome}</TaskTitle>
+          </ContainerTask>
+        )
+      })}</ListTask>
+      <Button onClick={() => AddTarefa()}>Criar tarefa</Button>
     </Box>
   )
   
