@@ -27,6 +27,8 @@ export const ContainerTask = styled.li`
   margin: 10px;
   background-color: #293B5F;
   list-style: none;
+  display: flex;
+  justify-content: space-between;
 ` 
 
 export const TaskTitle = styled.h2`
@@ -35,19 +37,19 @@ export const TaskTitle = styled.h2`
 `
 
 export const Button = styled.button`
-font-size: 1em;
-margin: 1em;
-padding: 0.25em 1em;
-border-radius: 6px;
-position: absolute;
-right: 69%;;
-bottom: 1%;
-margin-right: 10px;
-margin-bottom: 15px;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border-radius: 6px;
+  position: absolute;
+  right: 69%;;
+  bottom: 1%;
+  margin-right: 10px;
+  margin-bottom: 15px;
 
-/* Color the border and text with theme.main */
-color: ${props => props.theme.main};
-border: 2px solid ${props => props.theme.main};
+  /* Color the border and text with theme.main */
+  color: ${props => props.theme.main};
+  border: 2px solid ${props => props.theme.main};
 `;
 
 Button.defaultProps = {
@@ -55,3 +57,14 @@ Button.defaultProps = {
     main: "palevioletred"
   }
 }
+
+export const Button_Delete = styled.button`
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border-radius: 6px;
+
+  /* Color the border and text with theme.main */
+  color: ${props => props.theme.main};
+  border: 2px solid ${props => props.theme.main};
+`

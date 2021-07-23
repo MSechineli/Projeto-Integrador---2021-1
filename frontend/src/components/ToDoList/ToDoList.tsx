@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Title, Box, ContainerTask, ListTask, Button, TaskTitle } from './ToDoListStyle'
+import { Title, Box, ContainerTask, ListTask, Button, TaskTitle, Button_Delete } from './ToDoListStyle'
 import axios, { AxiosResponse } from 'axios'
 
 interface TypeTarefa{
@@ -24,7 +24,7 @@ const ToDoList: React.FC = () => {
 
   async function AddTarefa(){
 
-    await axios.post("http://localhost:3333/tarefas", {
+    await axios.post(`http://localhost:3333/tarefas`, {
       nome: "Veio do front",
       descricao: "Ihul",
       data:"2a3s1das321d"
@@ -35,14 +35,14 @@ const ToDoList: React.FC = () => {
 
   async function DeleteTarefa(id:Number){
 
-    await axios.delete("http://localhost:3333/tarefas").then((response:AxiosResponse) => {
+    await axios.delete(`http://localhost:3333/tarefas/${id}`).then((response:AxiosResponse) => {
       setUpdate(!update);
     })
   }
 
   async function UpdateTarefa(id:Number) {
     
-    await axios.put("http://localhost:3333/tarefas", {
+    await axios.put(`http://localhost:3333/tarefas`, {
       nome: "teste do update",
       descricao: "descricao trocada",
       data:"23fdf2"
@@ -57,9 +57,9 @@ const ToDoList: React.FC = () => {
       <ListTask>{dados.map((tarefa:TypeTarefa) => {
         return (
           <ContainerTask key={tarefa.id.toString()}>
-            <input type="checkbox"></input>
+            {/* <input type="checkbox"></input> */}
             <TaskTitle>{tarefa.nome}</TaskTitle>
-            <Button onClick = {() => DeleteTarefa(tarefa.id)}>X</Button>
+            <Button_Delete onClick = {() => DeleteTarefa(tarefa.id)}>X</Button_Delete>
           </ContainerTask>
         )
       })}</ListTask>
@@ -68,6 +68,5 @@ const ToDoList: React.FC = () => {
   )
   
 }
-
 
 export default ToDoList
