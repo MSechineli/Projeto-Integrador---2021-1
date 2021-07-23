@@ -2,36 +2,58 @@ import { Request, Response } from 'express';
 import { connection } from '../database/connection';
 
 class Tarefas {
-    async create(req: Request, res: Response){
-        const {nome, descricao, data} = req.body;
-        const ret = await connection('Tarefas').insert({
-            nome, 
-            descricao,
-            data
-        })
-        console.log(ret)
-        return res.send({
-            "nome": nome, 
-            "data": data, 
-            "descricao": descricao,
-            "response": ret
-        });
-    }
-    async read(request: Request, response: Response){
-        const dados = await connection('Tarefas');
+  async create(request: Request, response: Response) {
+    const { nome, descricao, data } = request.body;
+    await connection('Tarefas').insert({
+      nome,
+      descricao,
+      data
+    }).then((dados) => {
+      console.log(dados);
+      return response.json(dados);
+    })
+    .catch((err) => {
+      console.log(err);
+      return response.json(err);
+    });
+  }
+  async read(request: Request, response: Response) {
+    await connection('Tarefas')
+    .then((dados) => {
+      console.log(dados);
+      return response.json(dados);
+    })
+    .catch((err) => {
+      console.log(err);
+      return response.json(err);
+    });
+  }
+  async update(request: Request, response: Response) {
+    const { id, nome, descricao, data } = request.body
+    await connection('Tarefas')
+      .where({ id }).update({ nome, descricao, data })
+      .then((dados) => {
         console.log(dados);
-        return response.send(dados);
-    }
-    async update(request: Request, response: Response){
-        const { id, nome, descricao, data} = request.body
-        const alterado = await connection('Tarefas').where({id}).update({nome, descricao, data})
-        return response.json(alterado);
-    }
-    async delete(request: Request, response: Response){
-        const { id } = request.body
-        const removido = await connection('Tarefas').delete(id);
-        return response.json(removido);
-    }
+        return response.json(dados);
+      })
+      .catch((err) => {
+        console.log(err);
+        return response.json(err);
+      });
+  }
+  async delete(request: Request, response: Response) {
+    const { idTarefa } = request.params
+    await connection('Tarefas')
+      .where({ id: idTarefa }).delete()
+      .then((dados) => {
+        console.log(dados);
+        return response.json(dados);
+      })
+      .catch((err) => {
+        console.log(err);
+        return response.json(err);
+      });
+  }
 }
 
 

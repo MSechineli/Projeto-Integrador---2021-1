@@ -5,7 +5,7 @@ const tarefa = new Tarefas();
 
 routes.post("/tarefas", tarefa.create);
 routes.get("/tarefas", tarefa.read);
-routes.delete("/tarefas", tarefa.delete);
+routes.delete("/tarefas/:idTarefa", tarefa.delete);
 routes.put("/tarefas", tarefa.update);
 
 
