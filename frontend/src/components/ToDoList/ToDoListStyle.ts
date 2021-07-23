@@ -1,12 +1,24 @@
 import styled from "styled-components"
 
 export const Box = styled.div`
+  position: absolute;
   margin: 2vh;
   box-sizing: border-box;
   border-radius: 20px;
   width: 30%;
   height: 96.0vh;
   background-color: #47597E;
+`
+
+export const BoxAdicionarTarefa = styled.div`
+  position: absolute;
+  margin: 10vh;
+  box-sizing: border-box;
+  border-radius: 20px;
+  width: 30%;
+  height: 96.0vh;
+  background-color: red;
+  z-index: 9;
 `
 
 export const Title = styled.h1`
@@ -18,11 +30,16 @@ export const Title = styled.h1`
 `
 
 export const ListTask = styled.ul`
+  height: 90.0vh;
   margin: 0;
   padding: 0;
+  overflow-y: scroll; 
+  scroll-behavior: smooth;
+  position: relative;
 `
 
 export const ContainerTask = styled.li`
+  box-sizing: content-box;
   border-radius: 10px;
   margin: 10px;
   background-color: #293B5F;

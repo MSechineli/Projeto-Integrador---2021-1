@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Title, Box, ContainerTask, ListTask, Button, TaskTitle, Button_Delete } from './ToDoListStyle'
+import React, { Fragment, useEffect, useRef, useState } from 'react'
+import { Title, Box, ContainerTask, ListTask, Button, TaskTitle, Button_Delete, BoxAdicionarTarefa } from './ToDoListStyle'
 import axios, { AxiosResponse } from 'axios'
 
 interface TypeTarefa{
@@ -12,6 +12,8 @@ interface TypeTarefa{
 const ToDoList: React.FC = () => {
   const [dados, setDados] = useState<TypeTarefa[]>([]);
   const [update, setUpdate] = useState(false);
+  const [modalCriarTarefa, setModalCriarTarefa] = useState(false);  
+  const modalEl = useRef(null);
 
   useEffect(() => {
     async function getTarefas(){
@@ -23,14 +25,14 @@ const ToDoList: React.FC = () => {
   }, [update])
 
   async function AddTarefa(){
-
-    await axios.post(`http://localhost:3333/tarefas`, {
-      nome: "Veio do front",
-      descricao: "Ihul",
-      data:"2a3s1das321d"
-    }).then((response:AxiosResponse) => {
-      setUpdate(!update);
-    })
+    setModalCriarTarefa(!modalCriarTarefa)
+    // await axios.post(`http://localhost:3333/tarefas`, {
+    //   nome: "Veio do front",
+    //   descricao: "Ihul",
+    //   data:"2a3s1das321d"
+    // }).then((response:AxiosResponse) => {
+    //   setUpdate(!update);
+    // })
   }
 
   async function DeleteTarefa(id:Number){
@@ -52,19 +54,22 @@ const ToDoList: React.FC = () => {
   }
 
   return (
-    <Box>
-      <Title>Tasks</Title>
-      <ListTask>{dados.map((tarefa:TypeTarefa) => {
-        return (
-          <ContainerTask key={tarefa.id.toString()}>
-            {/* <input type="checkbox"></input> */}
-            <TaskTitle>{tarefa.nome}</TaskTitle>
-            <Button_Delete onClick = {() => DeleteTarefa(tarefa.id)}>X</Button_Delete>
-          </ContainerTask>
-        )
-      })}</ListTask>
-      <Button onClick={() => AddTarefa()}>Criar tarefa</Button>
-    </Box>
+    <>
+      <BoxAdicionarTarefa style={{visibility: modalCriarTarefa ? "visible" : "hidden"}}></BoxAdicionarTarefa>
+      <Box>
+        <Title>Tasks</Title>
+        <ListTask>{dados.map((tarefa:TypeTarefa) => {
+          return (
+            <ContainerTask key={tarefa.id.toString()}>
+              {/* <input type="checkbox"></input> */}
+              <TaskTitle>{tarefa.nome}</TaskTitle>
+              <Button_Delete onClick = {() => DeleteTarefa(tarefa.id)}>X</Button_Delete>
+            </ContainerTask>
+          )
+        })}</ListTask>
+        <Button onClick={() => AddTarefa()}>Criar tarefa</Button>
+      </Box>
+    </>
   )
   
 }
