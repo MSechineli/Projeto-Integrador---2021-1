@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react'
-import { Title, Box, ContainerTask, ListTask, Button, TaskTitle, Button_Delete, BoxAdicionarTarefa } from './ToDoListStyle'
+import React, { Fragment, useEffect, useState } from 'react'
+import { Title, BoxListar, ContainerTask, ListTask, Button, TaskTitle, ButtonDelete, BoxAdicionar } from './ToDoListStyle'
 import axios, { AxiosResponse } from 'axios'
 
 interface TypeTarefa{
@@ -11,9 +11,11 @@ interface TypeTarefa{
 
 const ToDoList: React.FC = () => {
   const [dados, setDados] = useState<TypeTarefa[]>([]);
+  const [nomeNovaTarefa, setNomeNovaTarefa] = useState("");
+  const [descricaoNovaTarefa, setDescricaoNovaTarefa] = useState("");
+  const [dataNovaTarefa, setDataNovaTarefa] = useState("");
   const [update, setUpdate] = useState(false);
   const [modalCriarTarefa, setModalCriarTarefa] = useState(false);  
-  const modalEl = useRef(null);
 
   useEffect(() => {
     async function getTarefas(){
@@ -24,18 +26,25 @@ const ToDoList: React.FC = () => {
     getTarefas()
   }, [update])
 
-  async function AddTarefa(){
-    setModalCriarTarefa(!modalCriarTarefa)
-    // await axios.post(`http://localhost:3333/tarefas`, {
-    //   nome: "Veio do front",
-    //   descricao: "Ihul",
-    //   data:"2a3s1das321d"
-    // }).then((response:AxiosResponse) => {
-    //   setUpdate(!update);
-    // })
+  function showModalAddTarefa(){
+    setModalCriarTarefa(true)
   }
 
-  async function DeleteTarefa(id:Number){
+  async function addTarefa(){
+    await axios.post(`http://localhost:3333/tarefas`, {
+      nome: nomeNovaTarefa,
+      descricao: descricaoNovaTarefa,
+      data:dataNovaTarefa
+    }).then((response:AxiosResponse) => {
+      setNomeNovaTarefa("")
+      setDescricaoNovaTarefa("")
+      setDataNovaTarefa("")
+      setUpdate(!update);
+      setModalCriarTarefa(false);
+    }).catch((err) => console.log(err))
+  }
+
+  async function deleteTarefa(id:Number){
 
     await axios.delete(`http://localhost:3333/tarefas/${id}`).then((response:AxiosResponse) => {
       setUpdate(!update);
@@ -43,7 +52,6 @@ const ToDoList: React.FC = () => {
   }
 
   async function UpdateTarefa(id:Number) {
-    
     await axios.put(`http://localhost:3333/tarefas`, {
       nome: "teste do update",
       descricao: "descricao trocada",
@@ -54,22 +62,28 @@ const ToDoList: React.FC = () => {
   }
 
   return (
-    <>
-      <BoxAdicionarTarefa style={{visibility: modalCriarTarefa ? "visible" : "hidden"}}></BoxAdicionarTarefa>
-      <Box>
+    <Fragment>
+      <BoxAdicionar style={{visibility: modalCriarTarefa ? "visible" : "hidden"}}>
+        <Title>Nova Tarefa</Title>
+        <input value={nomeNovaTarefa} onChange={e => setNomeNovaTarefa(e.target.value)} placeholder="Nome"/>
+        <input value={descricaoNovaTarefa} onChange={e => setDescricaoNovaTarefa(e.target.value)} placeholder="Descrição"/>
+        <input value={dataNovaTarefa} onChange={e => setDataNovaTarefa(e.target.value)}placeholder="Data"/>
+        <Button onClick = {() => addTarefa()}></Button>
+      </BoxAdicionar>
+      <BoxListar>
         <Title>Tasks</Title>
         <ListTask>{dados.map((tarefa:TypeTarefa) => {
           return (
             <ContainerTask key={tarefa.id.toString()}>
               {/* <input type="checkbox"></input> */}
               <TaskTitle>{tarefa.nome}</TaskTitle>
-              <Button_Delete onClick = {() => DeleteTarefa(tarefa.id)}>X</Button_Delete>
+              <ButtonDelete onClick = {() => deleteTarefa(tarefa.id)}>X</ButtonDelete>
             </ContainerTask>
           )
         })}</ListTask>
-        <Button onClick={() => AddTarefa()}>Criar tarefa</Button>
-      </Box>
-    </>
+        <Button onClick={() => showModalAddTarefa()}>Criar tarefa</Button>
+      </BoxListar>
+    </Fragment>
   )
   
 }

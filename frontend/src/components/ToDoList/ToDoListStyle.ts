@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-export const Box = styled.div`
+export const BoxListar = styled.div`
   position: absolute;
   margin: 2vh;
   box-sizing: border-box;
@@ -10,9 +10,11 @@ export const Box = styled.div`
   background-color: #47597E;
 `
 
-export const BoxAdicionarTarefa = styled.div`
+export const BoxAdicionar = styled.div`
   position: absolute;
-  margin: 10vh;
+  display: flex;
+  flex-direction: column;
+  margin: 2vh;
   box-sizing: border-box;
   border-radius: 20px;
   width: 30%;
@@ -33,7 +35,7 @@ export const ListTask = styled.ul`
   height: 90.0vh;
   margin: 0;
   padding: 0;
-  overflow-y: scroll; 
+  overflow-y: scroll;
   scroll-behavior: smooth;
   position: relative;
 `
@@ -75,7 +77,7 @@ Button.defaultProps = {
   }
 }
 
-export const Button_Delete = styled.button`
+export const ButtonDelete = styled.button`
   font-size: 1em;
   margin: 1em;
   padding: 0.25em 1em;
