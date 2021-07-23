@@ -33,8 +33,23 @@ const ToDoList: React.FC = () => {
     })
   }
 
-  
+  async function DeleteTarefa(id:Number){
 
+    await axios.delete("http://localhost:3333/tarefas").then((response:AxiosResponse) => {
+      setUpdate(!update);
+    })
+  }
+
+  async function UpdateTarefa(id:Number) {
+    
+    await axios.put("http://localhost:3333/tarefas", {
+      nome: "teste do update",
+      descricao: "descricao trocada",
+      data:"23fdf2"
+    }).then((response:AxiosResponse) => {
+      setUpdate(!update);
+    })
+  }
 
   return (
     <Box>
@@ -44,6 +59,7 @@ const ToDoList: React.FC = () => {
           <ContainerTask key={tarefa.id.toString()}>
             <input type="checkbox"></input>
             <TaskTitle>{tarefa.nome}</TaskTitle>
+            <Button onClick = {() => DeleteTarefa(tarefa.id)}>X</Button>
           </ContainerTask>
         )
       })}</ListTask>
