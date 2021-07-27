@@ -45,7 +45,7 @@ export const Title = styled.h1`
 `
 
 export const ListTask = styled.ul`
-  height: 90.0vh;
+  height: 80.0vh;
   margin: 0;
   padding: 0;
   overflow-y: scroll;
@@ -60,7 +60,7 @@ export const ContainerTask = styled.li`
   background-color: #293B5F;
   list-style: none;
   justify-content: space-between;
-  height: 15%;
+  height: 20%;
 ` 
 
 export const TaskTitle = styled.p`
@@ -71,11 +71,12 @@ export const TaskTitle = styled.p`
 `
 
 export const Button = styled.button`
+  cursor: pointer;
   font-size: 1em;
   margin: 1em;
   padding: 0.25em 1em;
   border-radius: 6px;
-  right: 69%;;
+  right: 69%;
   bottom: 1%;
   margin-right: 10px;
   margin-bottom: 15px;
@@ -92,6 +93,7 @@ Button.defaultProps = {
 }
 
 export const ButtonDelete = styled.button`
+  cursor: pointer;
   font-size: 1em;
   margin: 1em;
   padding: 0.25em 1em;
@@ -103,12 +105,12 @@ export const ButtonDelete = styled.button`
 `
 
 export const ButtonCriar = styled.button`
+  cursor: pointer;
   font-size: 1em;
   margin: 1em;
   padding: 0.25em 1em;
   border-radius: 6px;
-  position: absolute;
-  right: 69%;;
+  right: 69%;
   bottom: 1%;
   margin-right: 10px;
   margin-bottom: 15px;
