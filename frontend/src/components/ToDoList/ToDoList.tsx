@@ -46,7 +46,7 @@ const ToDoList: React.FC = () => {
     setIdNovaTarefa(tarefa.id)
     setNomeNovaTarefa(tarefa.nome)
     setDescricaoNovaTarefa(tarefa.descricao)
-    setDataNovaTarefa(new Date())
+    setDataNovaTarefa(new Date(tarefa.data))
   }
 
   function closeModalUpdateTarefa(){
