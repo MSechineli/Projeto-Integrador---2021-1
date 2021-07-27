@@ -4,17 +4,22 @@ import { connection } from '../database/connection';
 class Tarefas {
   async create(request: Request, response: Response) {
     const { nome, descricao, data } = request.body;
+
+    if(nome == "" || nome == undefined) response.status(400);
+    if(descricao == "" || descricao == undefined) response.status(400);
+    if(data == "" || data == undefined) response.status(400);
+
     await connection('Tarefas').insert({
       nome,
       descricao,
       data
     }).then((dados) => {
       console.log(dados);
-      return response.json(dados);
+      return response.status(200).json(dados);
     })
     .catch((err) => {
       console.log(err);
-      return response.json(err);
+      return response.status(400).json(err);
     });
   }
   async read(request: Request, response: Response) {
@@ -30,11 +35,21 @@ class Tarefas {
   }
   async update(request: Request, response: Response) {
     const { id, nome, descricao, data } = request.body
+
+    if(nome == "" || nome == undefined) response.status(400);
+    if(descricao == "" || descricao == undefined) response.status(400);
+    if(data == "" || data == undefined) response.status(400);
+    if(id == "" || id == undefined) response.status(400);
+
+
     await connection('Tarefas')
       .where({ id }).update({ nome, descricao, data })
       .then((dados) => {
-        console.log(dados);
-        return response.json(dados);
+        if(dados){
+          console.log(dados);
+          return response.json(dados);
+        }
+        throw "Tarefa não encontrada";
       })
       .catch((err) => {
         console.log(err);
@@ -43,11 +58,15 @@ class Tarefas {
   }
   async delete(request: Request, response: Response) {
     const { idTarefa } = request.params
+    if(idTarefa == "" || idTarefa == undefined) response.status(400);
     await connection('Tarefas')
       .where({ id: idTarefa }).delete()
       .then((dados) => {
-        console.log(dados);
-        return response.json(dados);
+        if(dados){
+          console.log(dados);
+          return response.json(dados);
+        }
+        throw "Tarefa não encontrada"
       })
       .catch((err) => {
         console.log(err);
