@@ -21,6 +21,7 @@ const ToDoList: React.FC = () => {
   const [update, setUpdate] = useState(false);
   const [modalCriarTarefa, setModalCriarTarefa] = useState(false);  
   const [modalEditarTarefa, setModalEditarTarefa] = useState(false);  
+  const [erroInput, setErroInput] = useState(false);  
 
   useEffect(() => {
     async function getTarefas(){
@@ -39,6 +40,7 @@ const ToDoList: React.FC = () => {
     setNomeNovaTarefa("")
     setDescricaoNovaTarefa("")
     setDataNovaTarefa(new Date())
+    setErroInput(false)
   }
 
   function showModalUpdateTarefa(tarefa: TypeTarefa){
@@ -47,6 +49,7 @@ const ToDoList: React.FC = () => {
     setNomeNovaTarefa(tarefa.nome)
     setDescricaoNovaTarefa(tarefa.descricao)
     setDataNovaTarefa(new Date(tarefa.data))
+    setErroInput(false)
   }
 
   function closeModalUpdateTarefa(){
@@ -55,9 +58,12 @@ const ToDoList: React.FC = () => {
     setNomeNovaTarefa("")
     setDescricaoNovaTarefa("")
     setDataNovaTarefa(new Date())
+    setErroInput(false)
   }
 
   async function addTarefa(){
+    if(nomeNovaTarefa == "") return setErroInput(true)
+    if(descricaoNovaTarefa == "") return setErroInput(true)
     await axios.post(`http://localhost:3333/tarefas`, {
       nome: nomeNovaTarefa,
       descricao: descricaoNovaTarefa,
@@ -68,6 +74,7 @@ const ToDoList: React.FC = () => {
       setDataNovaTarefa(new Date())
       setUpdate(!update);
       setModalCriarTarefa(false);
+      setErroInput(false)
     }).catch((err) => console.log(err))
   }
 
@@ -80,6 +87,8 @@ const ToDoList: React.FC = () => {
 
   async function UpdateTarefa() {
     console.log(idNovaTarefa, nomeNovaTarefa, descricaoNovaTarefa, dataNovaTarefa.toString());
+    if(nomeNovaTarefa == "") return setErroInput(true)
+    if(descricaoNovaTarefa == "") return setErroInput(true)
     await axios.put(`http://localhost:3333/tarefas`, {
       id: idNovaTarefa,
       nome: nomeNovaTarefa,
@@ -88,9 +97,10 @@ const ToDoList: React.FC = () => {
     }).then((response:AxiosResponse) => {
       setNomeNovaTarefa("")
       setDescricaoNovaTarefa("")
-      setDataNovaTarefa(new Date)
+      setDataNovaTarefa(new Date())
       setUpdate(!update);
       setModalEditarTarefa(false);
+      setErroInput(false)
     }).catch((err) => console.log(err))
   }
 
@@ -106,6 +116,7 @@ const ToDoList: React.FC = () => {
         <DatePicker dateFormat="yyyy/MM/dd" selected={dataNovaTarefa} onChange={(date:Date) => setDataNovaTarefa(date)}/>
         <Button onClick = {() => UpdateTarefa()}>Confirmar</Button>
         <Button onClick = {() => closeModalUpdateTarefa()}>Cancelar</Button>
+        <p style={{color : "red", visibility: erroInput ? "visible" : "hidden"}}>Verifique se todos os campos estão preenchidos.</p>
       </BoxEditar>
       <BoxAdicionar style={{visibility: modalCriarTarefa ? "visible" : "hidden"}}>
         <Title>Nova Tarefa</Title>
@@ -117,6 +128,7 @@ const ToDoList: React.FC = () => {
         <DatePicker dateFormat="yyyy/MM/dd" selected={dataNovaTarefa} onChange={(date:Date) => setDataNovaTarefa(date)}/>
         <Button onClick = {() => addTarefa()}>Adicionar</Button>
         <Button onClick = {() => closeModalAddTarefa()}>Cancelar</Button>
+        <p style={{color : "red", visibility: erroInput ? "visible" : "hidden"}}>Verifique se todos os campos estão preenchidos.</p>
       </BoxAdicionar>
       <BoxListar>
         <Title>Tasks</Title>
@@ -136,7 +148,6 @@ const ToDoList: React.FC = () => {
       </BoxListar>
     </Fragment>
   )
-  
 }
 
 export default ToDoList
