@@ -1,15 +1,22 @@
 import styled from "styled-components"
 
 export const BoxListar = styled.div`
+  text-align: center;
+  display:block;
   position: absolute;
-  margin: 2vh;
+  /* margin: 2vh; */
+  margin-left: 20%;
   box-sizing: border-box;
-  border-radius: 20px;
-  width: 30%;
-  height: 96.0vh;
+  /* border-radius: 20px; */
+  width: 80%;
+  height: 100.0vh;
   background-color: #47597E;
 `
-
+export const InputCriarTask = styled.input`
+  width: 80%;
+  /* margin: auto; */
+  padding: 10px;
+`
 export const BoxAdicionar = styled.div`
   position: absolute;
   display: flex;
