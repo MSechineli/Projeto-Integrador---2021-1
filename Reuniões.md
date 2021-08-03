@@ -1,3 +1,5 @@
+1ª Sprint
+
 Dia 06/07/2021
 
 - O que eu farei hoje para ajudar o Time de Desenvolvimento atender a meta da Sprint?
@@ -49,3 +51,17 @@ da meta da Sprint?
 Lucas - Não.
 Victor - Não.
 Matheus - Não.
+
+2ª Sprint
+- O que eu farei hoje para ajudar o Time de Desenvolvimento atender a meta da Sprint?
+Lucas - Criação das histórias de usuários e transformação dessas histórias em issues referentes as tarefas.
+Victor - Criação das histórias de usuários e transformação dessas histórias em issues referentes as tarefas.
+Matheus - Criação das histórias de usuários e transformação dessas histórias em issues referentes as tarefas.
+
+- Eu vejo algum obstáculo que impeça a mim ou o Time de Desenvolvimento no atendimento
+da meta da Sprint?
+- Eu vejo algum obstáculo que impeça a mim ou o Time de Desenvolvimento no atendimento
+da meta da Sprint?
+Lucas - Não, para essa sprint discutimos sobre as issues a serem adicionadas, com base nos problemas enfrentados na 1ª Sprint.
+Victor - Não, creio que com a experiência obtida por meio da primeira sprint conseguiremos ajustar de forma mais assertiva nossas tarefas. Nessa sprint iremos deliberar sobre os elementos produzidos na sprint passada, além é claro de produzir novos elementos.
+Matheus - Não, por enquanto não vejo nenhum problema, para essa sprint vamos lapidar o que foi feito na primeira com adição de novas funcionalidades.
