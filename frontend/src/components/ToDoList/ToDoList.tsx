@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { Title, BoxListar, ContainerTask, ListTask, Button, TaskTitle, ButtonDelete, BoxAdicionar, BoxEditar, ButtonCriar, InputCriarTask } from './ToDoListStyle'
+import { Title, BoxListar, ContainerTask, ListTask, Button, TaskTitle, ButtonDelete, BoxAdicionar, BoxEditar, ButtonCriar } from './ToDoListStyle'
 import axios, { AxiosResponse } from 'axios'
 import DatePicker from "react-datepicker";
 
@@ -21,8 +21,7 @@ const ToDoList: React.FC = () => {
   const [update, setUpdate] = useState(false);
   const [modalCriarTarefa, setModalCriarTarefa] = useState(false);  
   const [modalEditarTarefa, setModalEditarTarefa] = useState(false);  
-  const [erroInput, setErroInput] = useState(false);
-
+  const [erroInput, setErroInput] = useState(false);  
 
   useEffect(() => {
     async function getTarefas(){
@@ -63,12 +62,12 @@ const ToDoList: React.FC = () => {
   }
 
   async function addTarefa(){
-    if(nomeNovaTarefa === "") return
+    if(nomeNovaTarefa == "") return setErroInput(true)
+    if(descricaoNovaTarefa == "") return setErroInput(true)
     await axios.post(`http://localhost:3333/tarefas`, {
       nome: nomeNovaTarefa,
-      descricao: null,
-      data:null,
-      status:false
+      descricao: descricaoNovaTarefa,
+      data:dataNovaTarefa
     }).then((response:AxiosResponse) => {
       setNomeNovaTarefa("")
       setDescricaoNovaTarefa("")
@@ -88,8 +87,8 @@ const ToDoList: React.FC = () => {
 
   async function UpdateTarefa() {
     console.log(idNovaTarefa, nomeNovaTarefa, descricaoNovaTarefa, dataNovaTarefa.toString());
-    if(nomeNovaTarefa === "") return setErroInput(true)
-    if(descricaoNovaTarefa === "") return setErroInput(true)
+    if(nomeNovaTarefa == "") return setErroInput(true)
+    if(descricaoNovaTarefa == "") return setErroInput(true)
     await axios.put(`http://localhost:3333/tarefas`, {
       id: idNovaTarefa,
       nome: nomeNovaTarefa,
@@ -107,7 +106,7 @@ const ToDoList: React.FC = () => {
 
   return (
     <Fragment>
-      {/* <BoxEditar style={{visibility: modalEditarTarefa ? "visible" : "hidden"}}>
+      <BoxEditar style={{visibility: modalEditarTarefa ? "visible" : "hidden"}}>
         <Title>Editar Tarefa</Title>
         <label>Nome:</label>
         <input value={nomeNovaTarefa} onChange={e => setNomeNovaTarefa(e.target.value)} placeholder="Nome"/>
@@ -130,10 +129,9 @@ const ToDoList: React.FC = () => {
         <Button onClick = {() => addTarefa()}>Adicionar</Button>
         <Button onClick = {() => closeModalAddTarefa()}>Cancelar</Button>
         <p style={{color : "red", visibility: erroInput ? "visible" : "hidden"}}>Verifique se todos os campos estão preenchidos.</p>
-      </BoxAdicionar> */}
+      </BoxAdicionar>
       <BoxListar>
         <Title>Tasks</Title>
-        <InputCriarTask placeholder="Digite uma nova Tarefa..." onKeyPress={() => addTarefa()}/>
         <ListTask>{dados.map((tarefa:TypeTarefa) => {
           return (
             <ContainerTask key={tarefa.id.toString()}>
