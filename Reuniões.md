@@ -53,6 +53,9 @@ Victor - Não.
 Matheus - Não.
 
 2ª Sprint
+
+Dia 28/07/2021
+
 - O que eu farei hoje para ajudar o Time de Desenvolvimento atender a meta da Sprint?
 Lucas - Criação das histórias de usuários e transformação dessas histórias em issues referentes as tarefas.
 Victor - Criação das histórias de usuários e transformação dessas histórias em issues referentes as tarefas.
