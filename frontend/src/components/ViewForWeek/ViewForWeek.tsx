@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { Title, Box, Button } from './ViewForWeekStyle'
-import axios, { AxiosResponse } from 'axios'
-import {Row, Col, Divider} from 'antd';
-import 'antd/dist/antd.css'
+import React, { useEffect, useState } from 'react';
+import { Title, Box, Table, BoxInternal, CollapseWeeks } from './ViewForWeekStyle';
+import axios, { AxiosResponse } from 'axios';
+import 'antd/dist/antd.css';
+
+const { Panel } = CollapseWeeks;
 
 interface TypeTarefa{
   id: Number;
@@ -18,55 +19,200 @@ interface Day {
 }
 
 const ViewForWeek: React.FC = () => {
-    // const [dados, setDados] = useState<TypeTarefa[]>([]);
     const [update, setUpdate] = useState(false);
-    // const [weekDays, setWeekDays] = useState<Day[]>([]);
     const weekDays: Array<Day> = [
       {
         id: 0,
         name: 'Sanday',
-        tasks: [{
-          id: 0,
-          nome: "Teste",
-          descricao: "Teste 1234",
-          data: "12/12/24",
-        },],
+        tasks: [
+          {
+            id: 0,
+            nome: "Teste",
+            descricao: "Teste 1234",
+            data: "12/12/24",
+          },
+          {
+            id: 1,
+            nome: "Teste",
+            descricao: "Teste 1234",
+            data: "12/12/24",
+          },
+          {
+            id: 2,
+            nome: "Teste",
+            descricao: "Teste 1234",
+            data: "12/12/24",
+          },
+          {
+            id: 3,
+            nome: "Teste",
+            descricao: "Teste 1234",
+            data: "12/12/24",
+          },
+          {
+            id: 4,
+            nome: "Teste",
+            descricao: "Teste 1234",
+            data: "12/12/24",
+          },
+        ],
       },
       {
         id: 1,
         name: 'Monday',
-        tasks: [],
+        tasks: [
+          {
+            id: 0,
+            nome: "Teste",
+            descricao: "Teste 1234",
+            data: "12/12/24",
+          },
+          {
+            id: 1,
+            nome: "Teste",
+            descricao: "Teste 1234",
+            data: "12/12/24",
+          },
+          {
+            id: 2,
+            nome: "Teste",
+            descricao: "Teste 1234",
+            data: "12/12/24",
+          },
+        ],
       },
       {
         id: 2,
         name: 'Tuesday',
-        tasks: [],
+        tasks: [
+          {
+            id: 0,
+            nome: "Teste",
+            descricao: "Teste 1234",
+            data: "12/12/24",
+          },
+          {
+            id: 1,
+            nome: "Teste",
+            descricao: "Teste 1234",
+            data: "12/12/24",
+          },
+        ],
       },
       {
         id: 3,
         name: 'Wednesday',
-        tasks: [],
+        tasks: [
+          {
+            id: 0,
+            nome: "Teste",
+            descricao: "Teste 1234",
+            data: "12/12/24",
+          },
+          {
+            id: 1,
+            nome: "Teste",
+            descricao: "Teste 1234",
+            data: "12/12/24",
+          },
+          {
+            id: 2,
+            nome: "Teste",
+            descricao: "Teste 1234",
+            data: "12/12/24",
+          },
+        ],
       },
       {
         id: 4,
         name: 'Thursday',
-        tasks: [],
+        tasks: [
+          {
+            id: 0,
+            nome: "Teste",
+            descricao: "Teste 1234",
+            data: "12/12/24",
+          },
+          {
+            id: 1,
+            nome: "Teste",
+            descricao: "Teste 1234",
+            data: "12/12/24",
+          },
+        ],
       },
       {
         id: 5,
         name: 'Friday',
-        tasks: [],
+        tasks: [
+          {
+            id: 0,
+            nome: "Teste",
+            descricao: "Teste 1234",
+            data: "12/12/24",
+          },
+          {
+            id: 1,
+            nome: "Teste",
+            descricao: "Teste 1234",
+            data: "12/12/24",
+          },
+          {
+            id: 2,
+            nome: "Teste",
+            descricao: "Teste 1234",
+            data: "12/12/24",
+          },
+          {
+            id: 3,
+            nome: "Teste",
+            descricao: "Teste 1234",
+            data: "12/12/24",
+          },
+        ],
       },
       {
         id: 6,
         name: 'Saturday',
-        tasks: [],
-      }
+        tasks: [
+          {
+            id: 0,
+            nome: "Teste",
+            descricao: "Teste 1234",
+            data: "12/12/24",
+          },
+          {
+            id: 1,
+            nome: "Teste",
+            descricao: "Teste 1234",
+            data: "12/12/24",
+          },
+        ],
+      },
+      {
+        id: 6,
+        name: 'Saturday',
+        tasks: [
+          {
+            id: 0,
+            nome: "Teste",
+            descricao: "Teste 1234",
+            data: "12/12/24",
+          },
+          {
+            id: 1,
+            nome: "Teste",
+            descricao: "Teste 1234",
+            data: "12/12/24",
+          },
+        ],
+      },
     ];
   
     useEffect(() => {
       async function getTarefas() {
         await axios.get("http://localhost:3333/tarefas").then((response: AxiosResponse) => {
+          console.log("Teste");
           // setDados(response.data);
           // partionDate(response.data);
         }).catch((err) => console.log(err));
@@ -79,34 +225,54 @@ const ViewForWeek: React.FC = () => {
       await axios.post("http://localhost:3333/tarefas", {
         nome: "Veio do front",
         descricao: "Ihul",
-        data: "2a3s1das321d"
+        data: "20/08/2021"
       }).then((response: AxiosResponse) => {
         setUpdate(!update);
       })
     }
   
     return (
-      <Row>
-        {
-        weekDays.map((Day: Day, key) => {
-          return (
-            <Col span={1} order={key} offset={2}>
-              <Divider type="vertical" style={{color: "white"}}/>
-              <Box>
-                <Title>{Day.name}</Title>
-                {
-                  Day.tasks.map((TypeTarefa: TypeTarefa) => {
-                    return (
-                          <div>{TypeTarefa.data}</div>
-                    )
-                  })
-                }
-              </Box>
-            </Col>
-          )
-        })
-      }
-      </Row>)
+        <Table>
+          {
+          weekDays.map((Day: Day, key) => {
+            return (
+              <td>
+                <Box>
+                  <Title>{Day.name}</Title>
+                  <BoxInternal>
+                  <CollapseWeeks>
+                  {
+                    Day.tasks.map((TypeTarefa: TypeTarefa, key) => {
+                      return (
+                        <Panel 
+                          key={key} 
+                          header={TypeTarefa.nome} 
+                          style={{ 
+                            borderRadius: 20, 
+                            marginBottom: 5, 
+                            marginRight: 5,
+                            background: 'white'
+                          }}>
+
+                          <p>
+                          Data: {TypeTarefa.data}
+                          </p>
+                          <p>
+                          Descrição: {TypeTarefa.descricao}
+                          </p>
+                        </Panel>
+                      )
+                    })
+                  }
+                  </CollapseWeeks>
+                  </BoxInternal>
+                </Box>
+              </td>
+            )
+          })
+        }
+      </Table>
+      )
   
 }
 

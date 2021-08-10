@@ -1,13 +1,60 @@
-import styled from "styled-components"
+import styled from "styled-components";
+import { Collapse } from "antd";
+
+export const CollapseWeeks =  styled(Collapse)`
+    background: transparent;
+    border: transparent;
+    border-radius: 20px;
+`;
+
+export const Table =  styled.table`
+  width: max-content;
+  overflow-y: auto;
+
+  ::-webkit-scrollbar {
+    margin: 30px;
+    width:5px;
+  }
+      
+  ::-webkit-scrollbar-track {
+      border-radius: 20px;
+      background: #293B5F;
+  }
+      
+  ::-webkit-scrollbar-thumb {
+      border-radius: 20px;
+      background: #DBE6FD;
+  }
+`;
 
 export const Box = styled.div`
-  padding: 0%;
+  padding: 0% 5% 5% 5%;
   flex-direction: column;
-  /* box-sizing: border-box; */
+  margin-right: 8px;
+  margin-left: 8px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   border-radius: 20px;
-  width: 250%;
-  height: 96.0vh;
+  width: 200px;
+  height: 94.0vh;
   background-color: #47597E;
+`
+export const BoxInternal = styled.div`
+  height: 82.0vh;
+  overflow-y: auto;
+  ::-webkit-scrollbar {
+    width:10px;
+  }
+      
+  ::-webkit-scrollbar-track {
+      border-radius: 20px;
+      background: #293B5F;
+  }
+      
+  ::-webkit-scrollbar-thumb {
+      border-radius: 20px;
+      background: #DBE6FD;
+  }
 `
 
 export const Title = styled.h1`
