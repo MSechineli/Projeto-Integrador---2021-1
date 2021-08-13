@@ -69,188 +69,37 @@ const ViewForWeek: React.FC = () => {
       {
         id: 0,
         name: 'Sanday',
-        tasks: [
-          {
-            id: 0,
-            nome: "Teste",
-            descricao: "Teste 1234",
-            data: "12/12/24",
-          },
-          {
-            id: 1,
-            nome: "Teste",
-            descricao: "Teste 1234",
-            data: "12/12/24",
-          },
-          {
-            id: 2,
-            nome: "Teste",
-            descricao: "Teste 1234",
-            data: "12/12/24",
-          },
-          {
-            id: 3,
-            nome: "Teste",
-            descricao: "Teste 1234",
-            data: "12/12/24",
-          },
-          {
-            id: 4,
-            nome: "Teste",
-            descricao: "Teste 1234",
-            data: "12/12/24",
-          },
-        ],
+        tasks: [],
       },
       {
         id: 1,
         name: 'Monday',
-        tasks: [
-          {
-            id: 0,
-            nome: "Teste",
-            descricao: "Teste 1234",
-            data: "12/12/24",
-          },
-          {
-            id: 1,
-            nome: "Teste",
-            descricao: "Teste 1234",
-            data: "12/12/24",
-          },
-          {
-            id: 2,
-            nome: "Teste",
-            descricao: "Teste 1234",
-            data: "12/12/24",
-          },
-        ],
+        tasks: [],
       },
       {
         id: 2,
         name: 'Tuesday',
-        tasks: [
-          {
-            id: 0,
-            nome: "Teste",
-            descricao: "Teste 1234",
-            data: "12/12/24",
-          },
-          {
-            id: 1,
-            nome: "Teste",
-            descricao: "Teste 1234",
-            data: "12/12/24",
-          },
-        ],
+        tasks: [],
       },
       {
         id: 3,
         name: 'Wednesday',
-        tasks: [
-          {
-            id: 0,
-            nome: "Teste",
-            descricao: "Teste 1234",
-            data: "12/12/24",
-          },
-          {
-            id: 1,
-            nome: "Teste",
-            descricao: "Teste 1234",
-            data: "12/12/24",
-          },
-          {
-            id: 2,
-            nome: "Teste",
-            descricao: "Teste 1234",
-            data: "12/12/24",
-          },
-        ],
+        tasks: [],
       },
       {
         id: 4,
         name: 'Thursday',
-        tasks: [
-          {
-            id: 0,
-            nome: "Teste",
-            descricao: "Teste 1234",
-            data: "12/12/24",
-          },
-          {
-            id: 1,
-            nome: "Teste",
-            descricao: "Teste 1234",
-            data: "12/12/24",
-          },
-        ],
+        tasks: [],
       },
       {
         id: 5,
         name: 'Friday',
-        tasks: [
-          {
-            id: 0,
-            nome: "Teste",
-            descricao: "Teste 1234",
-            data: "12/12/24",
-          },
-          {
-            id: 1,
-            nome: "Teste",
-            descricao: "Teste 1234",
-            data: "12/12/24",
-          },
-          {
-            id: 2,
-            nome: "Teste",
-            descricao: "Teste 1234",
-            data: "12/12/24",
-          },
-          {
-            id: 3,
-            nome: "Teste",
-            descricao: "Teste 1234",
-            data: "12/12/24",
-          },
-        ],
+        tasks: [],
       },
       {
         id: 6,
         name: 'Saturday',
-        tasks: [
-          {
-            id: 0,
-            nome: "Teste",
-            descricao: "Teste 1234",
-            data: "12/12/24",
-          },
-          {
-            id: 1,
-            nome: "Teste",
-            descricao: "Teste 1234",
-            data: "12/12/24",
-          },
-        ],
-      },
-      {
-        id: 6,
-        name: 'Saturday',
-        tasks: [
-          {
-            id: 0,
-            nome: "Teste",
-            descricao: "Teste 1234",
-            data: "12/12/24",
-          },
-          {
-            id: 1,
-            nome: "Teste",
-            descricao: "Teste 1234",
-            data: "12/12/24",
-          },
-        ],
+        tasks: [],
       },
     ];
   
@@ -277,7 +126,7 @@ const ViewForWeek: React.FC = () => {
       })
     }
 
-    async function tableDays(day: Number) {
+    function getIdWeekDays(day: Number) {
       if (day == 0) {
         return 1;
       } else if (day == 1) {
@@ -290,30 +139,112 @@ const ViewForWeek: React.FC = () => {
         return 5;
       } else if (day == 5) {
         return 6;
-      } else if (day == 6) {
+      } else {
         return 0; 
       }
     }
 
-    async function filterDate(value: TypeTarefa) {
+    function getQtdDaysMonth(month: Number) {
+      switch(month) {
+        case 1:
+          return 31;
+        case 2:
+          return 28;
+        case 3:
+          return 31;
+        case 4:
+          return 30;
+        case 5:
+          return 31;
+        case 6:
+          return 30; 
+        case 7:
+          return 31;
+        case 8:
+          return 31;
+        case 9:
+          return 30;
+        case 10:
+          return 31;
+        case 11:
+          return 30;
+        default:
+          return 31;         
+      }
+    }
+
+    function filterDate(value: TypeTarefa) {
       var now = new Date();
+      console.log(now.getDate() - getIdWeekDays(now.getDay()-1));
       var dateRecived = new Date(String(value.data));
+      var arrayTest = [{day: 0, month: 0}, {day: 0, month: 0}, {day: 0, month: 0}, {day: 0, month: 0}, {day: 0, month: 0}, {day: 0, month: 0}, {day: 0, month: 0}];
 
-      var aux = tableDays(now.getDay());
+      arrayTest[getIdWeekDays(now.getDay()-1)].day = now.getDate();
+      arrayTest[getIdWeekDays(now.getDay()-1)].month = now.getMonth();
 
-      var dayMonthNow = now.getDate;
-      var dayMonthRecived = dateRecived.getDate;
-      
-      console.log(dateRecived.getMonth() == now.getMonth() && 
-      dateRecived.getFullYear() == now.getFullYear());
+      if (now.getDate() - getIdWeekDays(now.getDay()-1) >= 1) {
+        if ((now.getDate() + 7 - getIdWeekDays(now.getDay()-1)) < getQtdDaysMonth(now.getMonth())) {
+          var aux = now.getDate();
+          for (var i = 0; i < 7; i++) {
+            arrayTest[i].day = aux;
+            arrayTest[i].month = now.getMonth();
+            aux++;
+          }
+        } else {
+          var aux = now.getDate();
+          var aux2 = 1;
+          for (var i = 0; i < 7; i++) {
+            if (aux <= getQtdDaysMonth(now.getMonth())) {
+              arrayTest[i].day = aux;
+              arrayTest[i].month = now.getMonth();
+              aux++;
+            } else {
+              arrayTest[i].day = aux2;
+              arrayTest[i].month = now.getMonth() + 1;
+              aux2++; 
+            }
+          }
+        }
+      } else {
+          var aux = now.getDate();
+          for (var i = 0; i <= getIdWeekDays(now.getDay()-1); i++) {
+            arrayTest[i].day = aux;
+            arrayTest[i].month = now.getMonth();
+            aux++;
+          }
 
-      return dateRecived.getMonth() == now.getMonth() && 
-              dateRecived.getFullYear() == now.getFullYear();
+          var aux2 = now.getDate();
+          var aux3 = getQtdDaysMonth(now.getMonth() - 1);
+          for (var i = getIdWeekDays(now.getDay()-1); i >= 0; i--) {
+            if (aux2 <= getQtdDaysMonth(now.getMonth())) {
+              arrayTest[i].day = aux2;
+              arrayTest[i].month = now.getMonth();
+              aux2--;
+            } else {
+              arrayTest[i].day = aux3;
+              arrayTest[i].month = now.getMonth() - 1;
+              aux3--; 
+            }
+          }
+      }
+
+      for (var i = 0; i < arrayTest.length; i++) {
+        if (dateRecived.getMonth() == arrayTest[i].month && dateRecived.getDate() == arrayTest[i].day) {
+          return value;
+        }
+      }
     } 
 
-    async function ajustWeekDays() {
+    function ajustWeekDays() {
       var arrayDays = days.filter(filterDate);
-      console.log(arrayDays);
+      
+      for (var i = 0; i < arrayDays.length; i++) {
+        var day = new Date(String(arrayDays[i].data));
+        weekDays[getIdWeekDays(day.getDay())-1].tasks.push(arrayDays[i]);
+      }
+
+      console.log("Array de dias: ", arrayDays);
+      console.log("Array de semana contendo os arrays de dias: ", weekDays);
     }
   
     return (
