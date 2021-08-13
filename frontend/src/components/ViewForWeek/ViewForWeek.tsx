@@ -20,55 +20,11 @@ interface Day {
 
 const ViewForWeek: React.FC = () => {
     const [update, setUpdate] = useState(false);
-    const days: Array<TypeTarefa> = [
-        {
-          id: 0,
-          nome: "Teste",
-          descricao: "Teste 1234",
-          data: "08/08/2021",
-        },
-        {
-          id: 1,
-          nome: "Teste",
-          descricao: "Teste 1234",
-          data: "09/08/2021",
-        },
-        {
-          id: 2,
-          nome: "Teste",
-          descricao: "Teste 1234",
-          data: "10/08/2021",
-        },
-        {
-          id: 3,
-          nome: "Teste",
-          descricao: "Teste 1234",
-          data: "11/08/2021",
-        },
-        {
-          id: 4,
-          nome: "Teste",
-          descricao: "Teste 1234",
-          data: "12/08/2021",
-        },
-        {
-          id: 5,
-          nome: "Teste",
-          descricao: "Teste 1234",
-          data: "13/08/2021",
-        },
-        {
-          id: 6,
-          nome: "Teste",
-          descricao: "Teste 1234",
-          data: "14/10/2021",
-        },
-    ];
 
-    const weekDays: Array<Day> = [
+    const [weekDays, setWeekDays] = useState<Day[]>([
       {
         id: 0,
-        name: 'Sanday',
+        name: 'Sunday',
         tasks: [],
       },
       {
@@ -101,13 +57,13 @@ const ViewForWeek: React.FC = () => {
         name: 'Saturday',
         tasks: [],
       },
-    ];
+    ]);
   
     useEffect(() => {
-      ajustWeekDays();
       async function getTarefas() {
         await axios.get("http://localhost:3333/tarefas").then((response: AxiosResponse) => {
           console.log("Teste");
+          ajustWeekDays(response.data);
           // setDados(response.data);
           // partionDate(response.data);
         }).catch((err) => console.log(err));
@@ -175,76 +131,63 @@ const ViewForWeek: React.FC = () => {
 
     function filterDate(value: TypeTarefa) {
       var now = new Date();
-      console.log(now.getDate() - getIdWeekDays(now.getDay()-1));
       var dateRecived = new Date(String(value.data));
       var arrayTest = [{day: 0, month: 0}, {day: 0, month: 0}, {day: 0, month: 0}, {day: 0, month: 0}, {day: 0, month: 0}, {day: 0, month: 0}, {day: 0, month: 0}];
-
-      arrayTest[getIdWeekDays(now.getDay()-1)].day = now.getDate();
-      arrayTest[getIdWeekDays(now.getDay()-1)].month = now.getMonth();
-
-      if (now.getDate() - getIdWeekDays(now.getDay()-1) >= 1) {
-        if ((now.getDate() + 7 - getIdWeekDays(now.getDay()-1)) < getQtdDaysMonth(now.getMonth())) {
-          var aux = now.getDate();
-          for (var i = 0; i < 7; i++) {
+      
+      arrayTest[getIdWeekDays(now.getDay())].day = now.getDate();
+      arrayTest[getIdWeekDays(now.getDay())].month = now.getMonth();
+      
+      if (now.getDate() - getIdWeekDays(now.getDay()) >= 1) {
+        var aux = now.getDate();
+        var ini = aux - now.getDay();
+        var aux = 1;
+        for (var i = 0; i < 7; i++) {
+          if (ini <= getQtdDaysMonth(now.getMonth() + 1)) {
+            arrayTest[i].day = ini;
+            arrayTest[i].month = now.getMonth() + 1;
+            ini++;
+          } else {
             arrayTest[i].day = aux;
-            arrayTest[i].month = now.getMonth();
-            aux++;
-          }
-        } else {
-          var aux = now.getDate();
-          var aux2 = 1;
-          for (var i = 0; i < 7; i++) {
-            if (aux <= getQtdDaysMonth(now.getMonth())) {
-              arrayTest[i].day = aux;
-              arrayTest[i].month = now.getMonth();
-              aux++;
-            } else {
-              arrayTest[i].day = aux2;
-              arrayTest[i].month = now.getMonth() + 1;
-              aux2++; 
-            }
+            arrayTest[i].month = now.getMonth() + 2;
+            aux++; 
           }
         }
       } else {
-          var aux = now.getDate();
-          for (var i = 0; i <= getIdWeekDays(now.getDay()-1); i++) {
-            arrayTest[i].day = aux;
-            arrayTest[i].month = now.getMonth();
-            aux++;
-          }
 
-          var aux2 = now.getDate();
-          var aux3 = getQtdDaysMonth(now.getMonth() - 1);
-          for (var i = getIdWeekDays(now.getDay()-1); i >= 0; i--) {
-            if (aux2 <= getQtdDaysMonth(now.getMonth())) {
-              arrayTest[i].day = aux2;
-              arrayTest[i].month = now.getMonth();
-              aux2--;
-            } else {
-              arrayTest[i].day = aux3;
-              arrayTest[i].month = now.getMonth() - 1;
-              aux3--; 
-            }
+        var ini = getQtdDaysMonth(now.getMonth()) + now.getDate() - now.getDay();
+        var aux = 1;
+
+        for (var i = 0; i < 7; i++) {
+          if (ini <= getQtdDaysMonth(now.getMonth())) {
+            arrayTest[i].day = ini;
+            arrayTest[i].month = now.getMonth();
+            ini++;
+          } else {
+            arrayTest[i].day = aux;
+            arrayTest[i].month = now.getMonth() + 1;
+            aux++; 
           }
+        }
       }
 
       for (var i = 0; i < arrayTest.length; i++) {
-        if (dateRecived.getMonth() == arrayTest[i].month && dateRecived.getDate() == arrayTest[i].day) {
+        if (dateRecived.getMonth() + 1 == arrayTest[i].month && dateRecived.getDate() == arrayTest[i].day) {
           return value;
         }
       }
     } 
 
-    function ajustWeekDays() {
+    function ajustWeekDays(days: TypeTarefa[]) {
       var arrayDays = days.filter(filterDate);
-      
+
       for (var i = 0; i < arrayDays.length; i++) {
         var day = new Date(String(arrayDays[i].data));
-        weekDays[getIdWeekDays(day.getDay())-1].tasks.push(arrayDays[i]);
+        weekDays[getIdWeekDays(day.getDay())].tasks.push(arrayDays[i]);
       }
 
-      console.log("Array de dias: ", arrayDays);
-      console.log("Array de semana contendo os arrays de dias: ", weekDays);
+      setWeekDays(weekDays);
+
+      setUpdate(true);
     }
   
     return (
