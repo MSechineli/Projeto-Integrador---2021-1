@@ -4,12 +4,13 @@ export const BoxEditar = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
-  margin-top: 2vh;
+  margin-top: 0;
   margin-bottom: 2vh;
+  margin-left: 270px;
   box-sizing: border-box;
   border-radius: 20px;
   width: 270px;
-  height: 35vh;
+  height: 40vh;
   background-color: #261C2C;
   z-index: 9;
 `
@@ -35,6 +36,24 @@ export const ContainerProjeto = styled.li`
   justify-content: space-between;
   height: 20%;
 ` 
+// export const ModalProjeto = styled.div`
+//   box-sizing: border-box;
+//   margin: 0;
+//   padding: 0;
+//   color: rgba(0, 0, 0, 0.85);
+//   font-size: 14px;
+//   font-variant: tabular-nums;
+//   line-height: 1.5715;
+//   list-style: none;
+//   font-feature-settings: 'tnum';
+//   pointer-events: none;
+//   position: relative;
+//   top: 100px;
+//   width: auto;
+//   max-width: calc(100vw - 32px);
+//   margin: 0 auto;
+//   padding-bottom: 24px;
+// `
 
 export const Title = styled.h1`
   padding: 10px;

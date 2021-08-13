@@ -1,12 +1,11 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import axios, { AxiosResponse } from 'axios'
-import DatePicker from "react-datepicker";
-import { Button, ButtonCriar, BoxEditar, BoxAdicionar, ContainerProjeto, Title, NomeProjeto} from "./MenuStyle"
+import { Button, ButtonCriar, BoxEditar, BoxAdicionar, ContainerProjeto, Title, NomeProjeto } from "./MenuStyle"
 import "react-datepicker/dist/react-datepicker.css";
 import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
-import antd from 'antd'
-
+import { Modal } from 'antd';
+import 'antd/dist/antd.css';
 interface TypeProjeto{
     id: number;
     nome: string;
@@ -19,6 +18,7 @@ const MenuProjetos: React.FC = () => {
     const [update, setUpdate] = useState(false);
     const [modalCriarProjeto, setModalCriarProjeto] = useState(false);  
     const [modalEditarProjeto, setModalEditarProjeto] = useState(false);  
+    const [isModalVisible, setIsModalVisible] = useState(false);
     const [erroInput, setErroInput] = useState(false);  
 
     useEffect(() => {
@@ -57,7 +57,7 @@ const MenuProjetos: React.FC = () => {
         setErroInput(false)
       }
 
-      async function addProjeto(){
+      async function AddProjeto(){
         if(nomeNovoProjeto == "") return setErroInput(true)
         await axios.post(`http://localhost:3333/projetos`, {
           nome: nomeNovoProjeto
@@ -101,10 +101,9 @@ const MenuProjetos: React.FC = () => {
                     <MenuItem >Semana</MenuItem>
                         <SubMenu title="Projetos" > {dados.map((projeto:TypeProjeto) => {
                                 return(
-                                    <ContainerProjeto key={projeto.id.toString()}>
-                                        {<MenuItem style = {{color : "white"}}>{projeto.nome}</MenuItem>}
-                                        {/* <MenuItem style={{color:"white", visibility: modalEditarProjeto ? "visible" : "hidden"}}><NomeProjeto defaultValue={projeto.nome} onChange={e => setNomeNovoProjeto(e.target.value)}/></MenuItem> */}
-                                        <Button onClick = {() => showModalUpdateProjeto(projeto)}>Editar</Button>
+                                    <ContainerProjeto key={projeto.id.toString()}>{
+                                        <MenuItem style = {{color : "white"}}>{projeto.nome}</MenuItem>}
+                                        <Button onClick={()=> showModalUpdateProjeto(projeto)}>Editar</Button>
                                         <Button onClick = {() => DeleteProjeto(projeto.id)}>X</Button>
                                     </ContainerProjeto>
                                 )
@@ -113,22 +112,14 @@ const MenuProjetos: React.FC = () => {
                         </SubMenu> 
                 </Menu>
             </ProSidebar>
-            <BoxAdicionar style={{visibility: modalCriarProjeto ? "visible" : "hidden"}}>
-                <Title>Novo Projeto</Title>
-                <label style = {{color : "white"}}> Nome:</label>
-                <input value = {nomeNovoProjeto} onChange={e => setNomeNovoProjeto(e.target.value)} placeholder="Nome"/>
-                <Button onClick = {() => addProjeto()}>Adicionar</Button>
-                <Button onClick = {() => closeModalAddProjeto()}>Cancelar</Button>
-                <p style={{color : "white", visibility: erroInput ? "visible" : "hidden"}}>Verifique se o campo "Nome" foi preenchido.</p>
-            </BoxAdicionar>
-            <BoxEditar style={{visibility: modalEditarProjeto ? "visible" : "hidden"}}>
-                <Title>Editar Projeto</Title>
-                <label style={{color : "white"}}> Nome:</label>
-                <input value={nomeNovoProjeto} onChange={e => setNomeNovoProjeto(e.target.value)} placeholder="Nome"/>
-                <Button onClick = {() => UpdateProjeto()}>Confirmar</Button>
-                <Button onClick = {() => closeModalUpdateProjeto()}>Cancelar</Button>
-                <p style={{color : "white", visibility: erroInput ? "visible" : "hidden"}}>Verifique se o campo "Nome" foi preenchido.</p>
-            </BoxEditar>
+            <Modal title="Editar projeto" visible={modalEditarProjeto} onOk={()=> UpdateProjeto()} onCancel={closeModalUpdateProjeto}>
+              <label style={{color : "black"}}> Nome:</label>
+              <input value={nomeNovoProjeto} onChange={e => setNomeNovoProjeto(e.target.value)} placeholder="Nome"/>
+            </Modal>    
+            <Modal title="Criar projeto" visible={modalCriarProjeto} onOk={()=> AddProjeto()} onCancel={closeModalAddProjeto}>
+              <label style={{color : "black"}}> Nome:</label>
+              <input value={nomeNovoProjeto} onChange={e => setNomeNovoProjeto(e.target.value)} placeholder="Nome"/>
+            </Modal>              
         </Fragment>
     )
 }

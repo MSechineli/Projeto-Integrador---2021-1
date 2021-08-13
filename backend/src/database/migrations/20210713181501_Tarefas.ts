@@ -7,6 +7,7 @@ export async function up(knex: Knex): Promise<void> {
         table.string("nome").notNullable();
         table.string("descricao");
         table.date("data").notNullable();
+        table.foreign('id_in_projetos').references('Projetos.Tarefas_id_in_projetos');
     })
 }
 
