@@ -6,6 +6,7 @@ import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
 import { Modal } from 'antd';
 import 'antd/dist/antd.css';
+
 interface TypeProjeto{
     id: number;
     nome: string;
