@@ -3,16 +3,15 @@ import { connection } from '../database/connection';
 
 class Tarefas {
   async create(request: Request, response: Response) {
-    const { nome, descricao, data } = request.body;
+    const { nome } = request.body;
 
-    if(nome == "" || nome == undefined) response.status(400);
-    if(descricao == "" || descricao == undefined) response.status(400);
-    if(data == "" || data == undefined) response.status(400);
+    if(nome === "" || nome === undefined) return response.status(400).json("ERRO: nome tarefa vazio");
 
     await connection('Tarefas').insert({
       nome,
-      descricao,
-      data
+      descricao: "",
+      dataDefinida: null,
+      status: false,
     }).then((dados) => {
       console.log(dados);
       return response.status(200).json(dados);
@@ -34,16 +33,15 @@ class Tarefas {
     });
   }
   async update(request: Request, response: Response) {
-    const { id, nome, descricao, data } = request.body
+    const { id, nome, descricao, dataDefinida, status } = request.body
 
-    if(nome == "" || nome == undefined) response.status(400);
-    if(descricao == "" || descricao == undefined) response.status(400);
-    if(data == "" || data == undefined) response.status(400);
-    if(id == "" || id == undefined) response.status(400);
+    console.log("UPDATE:", id, nome, descricao, dataDefinida, status);
 
+    if(id == "" || id == undefined) return response.status(400).json();
+    if(nome == "") return response.status(400).json();
 
     await connection('Tarefas')
-      .where({ id }).update({ nome, descricao, data })
+      .where({ id }).update({ nome, descricao, dataDefinida, status })
       .then((dados) => {
         if(dados){
           console.log(dados);
@@ -58,7 +56,7 @@ class Tarefas {
   }
   async delete(request: Request, response: Response) {
     const { idTarefa } = request.params
-    if(idTarefa == "" || idTarefa == undefined) response.status(400);
+    if(idTarefa == "" || idTarefa == undefined) return response.status(400);
     await connection('Tarefas')
       .where({ id: idTarefa }).delete()
       .then((dados) => {
