@@ -84,3 +84,19 @@ da meta da Sprint?
 Lucas - Não.
 Victor - Não.
 Matheus - Não.
+
+3ª Sprint
+
+Dia 18/08/2021
+
+- O que eu farei hoje para ajudar o Time de Desenvolvimento atender a meta da Sprint?
+Lucas - Criação de issues e Criar o relacionamento entre Projetos e Tarefas #28.
+Victor - Criação de issues e Criar um filtro de datas para a semana atual #30.
+Matheus - Criação de issues e Criar uma rota com parâmetros para acesso pelo Menu #29.
+
+- Eu vejo algum obstáculo que impeça a mim ou o Time de Desenvolvimento no atendimento
+da meta da Sprint?
+Lucas - Falta de tempo.
+Victor - Falta de tempo.
+Matheus - Falta de tempo.
+
