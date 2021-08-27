@@ -189,6 +189,12 @@ const ViewForWeek: React.FC = () => {
 
       setUpdate(true);
     }
+
+    function formateDate(dayR: String) {
+      var dateRecived = new Date(String(dayR));
+
+      return dateRecived.getDate() + "/ " + String(dateRecived.getMonth() + 1) + "/ " + dateRecived.getFullYear();
+    }
   
     return (
         <Table>
@@ -214,7 +220,7 @@ const ViewForWeek: React.FC = () => {
                             background: 'white'
                           }}>
                           <p>
-                          Data: {TypeTarefa.data}
+                          Data: {formateDate(TypeTarefa.data)}
                           </p>
                           <p>
                           Descrição: {TypeTarefa.descricao}
