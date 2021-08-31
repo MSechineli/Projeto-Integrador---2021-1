@@ -16,26 +16,6 @@ interface Day {
 
   
 class Tarefas {
-    async create(req: Request, res: Response){
-        const {nome, descricao, data} = req.body;
-        const ret = await connection('Tarefas').insert({
-            nome, 
-            descricao,
-            data
-        })
-        console.log(ret)
-        return res.send({
-            "nome": nome, 
-            "data": data, 
-            "descricao": descricao,
-            "response": ret
-        });
-    }
-    async read(request: Request, response: Response){
-        const dados = await connection('Tarefas');
-        console.log(dados);
-        return response.send(dados);
-    }
     async readNowDate(request: Request, response: Response){
         const dados = await connection('Tarefas');
         var weekDays = [{
@@ -185,17 +165,81 @@ class Tarefas {
 
         ajustWeekDays(dados);
         return response.send(weekDays);
-    }
-    async update(request: Request, response: Response){
-        const { id, nome, descricao, data} = request.body
-        const alterado = await connection('Tarefas').where({id}).update({nome, descricao, data})
-        return response.json(alterado);
-    }
-    async delete(request: Request, response: Response){
-        const { id } = request.body
-        const removido = await connection('Tarefas').delete(id);
-        return response.json(removido);
-    }
+  }
+  
+  async create(request: Request, response: Response) {
+    const { nome, descricao, data, id_projeto } = request.body;
+
+    if(nome == "" || nome == undefined) response.status(400);
+    if(descricao == "" || descricao == undefined) response.status(400);
+    if(data == "" || data == undefined) response.status(400);
+    if(id_projeto == "" || id_projeto == undefined) response.status(400);
+
+    await connection('Tarefas').insert({
+      nome,
+      descricao,
+      data,
+      id_projeto
+    }).then((dados) => {
+      console.log(dados);
+      return response.status(200).json(dados);
+    })
+    .catch((err) => {
+      console.log(err);
+      return response.status(400).json(err);
+    });
+  }
+  async read(request: Request, response: Response) {
+    await connection('Tarefas')
+    .then((dados) => {
+      console.log(dados);
+      return response.json(dados);
+    })
+    .catch((err) => {
+      console.log(err);
+      return response.json(err);
+    });
+  }
+  async update(request: Request, response: Response) {
+    const { id, nome, descricao, data, id_projeto } = request.body
+
+    if(nome == "" || nome == undefined) response.status(400);
+    if(descricao == "" || descricao == undefined) response.status(400);
+    if(data == "" || data == undefined) response.status(400);
+    if(id == "" || id == undefined) response.status(400);
+    if(id_projeto == "" || id_projeto == undefined) response.status(400);
+
+    await connection('Tarefas')
+      .where({ id }).update({ nome, descricao, data, id_projeto })
+      .then((dados) => {
+        if(dados){
+          console.log(dados);
+          return response.json(dados);
+        }
+        throw "Tarefa não encontrada";
+      })
+      .catch((err) => {
+        console.log(err);
+        return response.json(err);
+      });
+  }
+  async delete(request: Request, response: Response) {
+    const { idTarefa } = request.params
+    if(idTarefa == "" || idTarefa == undefined) response.status(400);
+    await connection('Tarefas')
+      .where({ id: idTarefa }).delete()
+      .then((dados) => {
+        if(dados){
+          console.log(dados);
+          return response.json(dados);
+        }
+        throw "Tarefa não encontrada"
+      })
+      .catch((err) => {
+        console.log(err);
+        return response.json(err);
+      });
+  }
 }
 
 

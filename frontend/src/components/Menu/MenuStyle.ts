@@ -1,40 +1,59 @@
 import styled from "styled-components"
 
-export const BoxListar = styled.div`
-  position: absolute;
-  margin: 2vh;
-  box-sizing: border-box;
-  border-radius: 20px;
-  width: 30%;
-  height: 96.0vh;
-  background-color: #47597E;
-`
-
-export const BoxAdicionar = styled.div`
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  margin: 2vh;
-  box-sizing: border-box;
-  border-radius: 20px;
-  width: 30%;
-  height: 96.0vh;
-  background-color: #47597E;
-  z-index: 9;
-`
-
 export const BoxEditar = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
-  margin: 2vh;
+  margin-top: 0;
+  margin-bottom: 2vh;
+  margin-left: 270px;
   box-sizing: border-box;
   border-radius: 20px;
-  width: 30%;
-  height: 96.0vh;
-  background-color: #47597E;
+  width: 270px;
+  height: 40vh;
+  background-color: #261C2C;
   z-index: 9;
 `
+export const BoxAdicionar = styled.div`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+  box-sizing: border-box;
+  border-radius: 20px;
+  width: 270px;
+  height: 35vh;
+  background-color: #055052;
+  z-index: 9;
+`
+export const ContainerProjeto = styled.li`
+  box-sizing: content-box;
+  border-radius: 10px;
+  margin: 10px;
+  background-color: dimgray;
+  list-style: none;
+  justify-content: space-between;
+  height: 20%;
+` 
+// export const ModalProjeto = styled.div`
+//   box-sizing: border-box;
+//   margin: 0;
+//   padding: 0;
+//   color: rgba(0, 0, 0, 0.85);
+//   font-size: 14px;
+//   font-variant: tabular-nums;
+//   line-height: 1.5715;
+//   list-style: none;
+//   font-feature-settings: 'tnum';
+//   pointer-events: none;
+//   position: relative;
+//   top: 100px;
+//   width: auto;
+//   max-width: calc(100vw - 32px);
+//   margin: 0 auto;
+//   padding-bottom: 24px;
+// `
 
 export const Title = styled.h1`
   padding: 10px;
@@ -42,32 +61,6 @@ export const Title = styled.h1`
   text-align: center;
   color:#DBE6FD;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-`
-
-export const ListTask = styled.ul`
-  height: 80.0vh;
-  margin: 0;
-  padding: 0;
-  overflow-y: scroll;
-  scroll-behavior: smooth;
-  position: relative;
-`
-
-export const ContainerTask = styled.li`
-  box-sizing: content-box;
-  border-radius: 10px;
-  margin: 10px;
-  background-color: #293B5F;
-  list-style: none;
-  justify-content: space-between;
-  height: 20%;
-` 
-
-export const TaskTitle = styled.p`
-  margin-left: 10px;
-  margin-bottom: 0px;
-  margin-top: 0px;
-  text-align: left;
 `
 
 export const Button = styled.button`
@@ -95,8 +88,6 @@ Button.defaultProps = {
 export const ButtonDelete = styled.button`
   cursor: pointer;
   font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
   border-radius: 6px;
 
   /* Color the border and text with theme.main */
@@ -125,3 +116,15 @@ ButtonCriar.defaultProps = {
     main: "palevioletred"
   }
 }
+
+export const NomeProjeto = styled.input`
+  background-color: dimgray;
+  color: black;
+  /* padding: 15px 32px; */
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  border: dimgray;
+
+`
