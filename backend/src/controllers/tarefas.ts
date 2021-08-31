@@ -38,7 +38,7 @@ class Tarefas {
   }
   async getByIdProjeto(request: Request, response: Response) {
     const { idProjeto } = request.params
-    await connection('Tarefas').where({ idProjeto })
+    await connection('Tarefas').where({ id_projeto: idProjeto })
     .then((dados) => {
       console.log(dados);
       return response.json(dados);

@@ -108,6 +108,7 @@ const MenuProjetos: React.FC = () => {
                                     <ContainerProjeto key={projeto.id.toString()}>{
                                         <MenuItem style = {{color : "white"}} onClick={() => {
                                           history.push(`/ToDoList/${projeto.id}`)
+                                          history.go(0)
                                         }}>{projeto.nome}</MenuItem>}
                                         <Button onClick={()=> showModalUpdateProjeto(projeto)}>Editar</Button>
                                         <Button onClick = {() => DeleteProjeto(projeto.id)}>X</Button>

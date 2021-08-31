@@ -28,7 +28,7 @@ interface TypeTarefa{
 }
 
 const ToDoList: React.FC = () => {
-  const params = useParams();
+  const params:any = useParams();
   const [dados, setDados] = useState<TypeTarefa[]>([]);
   const [nomeNovaTarefa, setNomeNovaTarefa] = useState("");
   const [nomeTarefa, setNomeTarefa] = useState("");
@@ -37,10 +37,11 @@ const ToDoList: React.FC = () => {
   const [update, setUpdate] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [dataTarefa, setDataTarefa] = useState<string | undefined>(undefined);
+  console.log("PARAAAAAMS:", params);
 
   useEffect(() => {
     async function getTarefas(){
-      await axios.get("http://localhost:3333/tarefas").then((response: AxiosResponse) =>{
+      await axios.get(`http://localhost:3333/tarefas/${params.idProjeto}`).then((response: AxiosResponse) =>{
         setDados(response.data);
       }).catch((err) => console.log(err));
     }
@@ -70,6 +71,7 @@ const ToDoList: React.FC = () => {
       await axios.post(`http://localhost:3333/tarefas`, {
         nome: nomeNovaTarefa,
         descricao: "",
+        id_projeto: params.idProjeto,
         data: null,
         status:false
       }).then((response:AxiosResponse) => {
@@ -89,6 +91,7 @@ const ToDoList: React.FC = () => {
   const updateStatusTarefa = async(idTarefa:number, novoStatus:boolean) => {
     console.log("UPDATE STATUS")
     await axios.put(`http://localhost:3333/tarefas`, {
+      id_projeto: params.idProjeto,
       id: idTarefa,
       status: novoStatus
     }).then((response:AxiosResponse) => {
@@ -99,6 +102,7 @@ const ToDoList: React.FC = () => {
   const UpdateTarefa = async() => {
     console.log("UPDATE TAREFA",idTarefa, nomeNovaTarefa, descricaoTarefa, dataTarefa);
     await axios.put(`http://localhost:3333/tarefas`, {
+      id_projeto: params.idProjeto,
       id: idTarefa,
       nome: nomeTarefa,
       descricao: descricaoTarefa,
