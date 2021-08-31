@@ -1,16 +1,16 @@
 import React, { Fragment } from 'react';
 
 import { GlobalStyle } from './globalStyle';
-import ToDoList from './components/ToDoList/ToDoList';
 
 import 'antd/dist/antd.css';
+import Routes from './routes';
 
 
 function App() {
   return (
     <Fragment>
       <GlobalStyle/>
-      <ToDoList/>
+      <Routes/>
     </Fragment>
   );
 }

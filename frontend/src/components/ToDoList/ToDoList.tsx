@@ -17,6 +17,7 @@ import {DatePicker, Input, Row} from "antd";
 import { DeleteOutlined } from "@ant-design/icons"
 
 import "react-datepicker/dist/react-datepicker.css";
+import { useParams } from 'react-router-dom';
 
 interface TypeTarefa{
   id: number;
@@ -27,6 +28,7 @@ interface TypeTarefa{
 }
 
 const ToDoList: React.FC = () => {
+  const params = useParams();
   const [dados, setDados] = useState<TypeTarefa[]>([]);
   const [nomeNovaTarefa, setNomeNovaTarefa] = useState("");
   const [nomeTarefa, setNomeTarefa] = useState("");

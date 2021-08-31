@@ -21,8 +21,20 @@ class Tarefas {
       return response.status(400).json(err);
     });
   }
-  async read(request: Request, response: Response) {
+  async get(request: Request, response: Response) {
     await connection('Tarefas')
+    .then((dados) => {
+      console.log(dados);
+      return response.json(dados);
+    })
+    .catch((err) => {
+      console.log(err);
+      return response.json(err);
+    });
+  }
+  async getByIdProjeto(request: Request, response: Response) {
+    const { idProjeto } = request.params
+    await connection('Tarefas').where({ idProjeto })
     .then((dados) => {
       console.log(dados);
       return response.json(dados);
