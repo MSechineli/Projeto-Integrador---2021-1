@@ -8,6 +8,8 @@ const projeto = new Projetos();
 routes.post("/tarefas", tarefa.create);
 routes.get("/tarefas", tarefa.get);
 routes.get("/tarefas/:idProjeto", tarefa.getByIdProjeto);
+routes.get("/tarefas/nowdate", tarefa.readNowDate);
+routes.delete("/tarefas", tarefa.delete);
 routes.delete("/tarefas/:idTarefa", tarefa.delete);
 routes.put("/tarefas", tarefa.update);
 
