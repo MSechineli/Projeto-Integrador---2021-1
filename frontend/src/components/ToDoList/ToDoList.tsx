@@ -1,7 +1,20 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { Title, BoxListar, ContainerTask, ListTask, Button, TaskTitle, ButtonDelete, BoxAdicionar, BoxEditar, ButtonCriar } from './ToDoListStyle'
+import moment from 'moment'
+import { 
+  Title, 
+  BoxListar, 
+  ListTask, 
+  TaskTitle, 
+  InputCriarTask, 
+  ListItem, 
+  ModalTask, 
+  ContainerTask, 
+  CheckBoxList,
+  ButtonDeleteTarefa
+} from './ToDoListStyle'
 import axios, { AxiosResponse } from 'axios'
-import DatePicker from "react-datepicker";
+import {DatePicker, Input, Row} from "antd";
+import { DeleteOutlined } from "@ant-design/icons"
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -9,19 +22,19 @@ interface TypeTarefa{
   id: number;
   nome: string;
   descricao: string;
-  data: string;
+  dataDefinida: string;
+  status: boolean; 
 }
 
 const ToDoList: React.FC = () => {
   const [dados, setDados] = useState<TypeTarefa[]>([]);
   const [nomeNovaTarefa, setNomeNovaTarefa] = useState("");
-  const [descricaoNovaTarefa, setDescricaoNovaTarefa] = useState("");
-  const [dataNovaTarefa, setDataNovaTarefa] = useState(new Date());
-  const [idNovaTarefa, setIdNovaTarefa] = useState<Number>();
+  const [nomeTarefa, setNomeTarefa] = useState("");
+  const [descricaoTarefa, setDescricaoTarefa] = useState("");
+  const [idTarefa, setIdTarefa] = useState<Number>();
   const [update, setUpdate] = useState(false);
-  const [modalCriarTarefa, setModalCriarTarefa] = useState(false);  
-  const [modalEditarTarefa, setModalEditarTarefa] = useState(false);  
-  const [erroInput, setErroInput] = useState(false);  
+  const [modalVisible, setModalVisible] = useState(false);
+  const [dataTarefa, setDataTarefa] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     async function getTarefas(){
@@ -32,120 +45,115 @@ const ToDoList: React.FC = () => {
     getTarefas()
   }, [update])
 
-  function showModalAddTarefa(){
-    setModalCriarTarefa(true)
-  }
-  function closeModalAddTarefa(){
-    setModalCriarTarefa(false);
-    setNomeNovaTarefa("")
-    setDescricaoNovaTarefa("")
-    setDataNovaTarefa(new Date())
-    setErroInput(false)
+  const handleModal = (tarefa: TypeTarefa) => {
+    console.log("Teste", tarefa)
+    setModalVisible(true)
+    setIdTarefa(tarefa.id)
+    setNomeTarefa(tarefa.nome)
+    setDescricaoTarefa(tarefa.descricao)
+    setDataTarefa(tarefa.dataDefinida)
   }
 
-  function showModalUpdateTarefa(tarefa: TypeTarefa){
-    setModalEditarTarefa(true)
-    setIdNovaTarefa(tarefa.id)
-    setNomeNovaTarefa(tarefa.nome)
-    setDescricaoNovaTarefa(tarefa.descricao)
-    setDataNovaTarefa(new Date(tarefa.data))
-    setErroInput(false)
+  const closeModal = () => {
+    setModalVisible(false)
+    setIdTarefa(NaN)
+    setNomeTarefa("")
+    setDescricaoTarefa("")
+    setDataTarefa(undefined)
   }
 
-  function closeModalUpdateTarefa(){
-    setModalEditarTarefa(false)
-    setIdNovaTarefa(NaN)
-    setNomeNovaTarefa("")
-    setDescricaoNovaTarefa("")
-    setDataNovaTarefa(new Date())
-    setErroInput(false)
+  async function addTarefa(e: React.KeyboardEvent<HTMLDivElement>){
+    if(nomeNovaTarefa === "") return
+    if(e.key === 'Enter'){
+      await axios.post(`http://localhost:3333/tarefas`, {
+        nome: nomeNovaTarefa,
+        descricao: "",
+        data: null,
+        status:false
+      }).then((response:AxiosResponse) => {
+        setNomeNovaTarefa("")
+        setUpdate(!update);
+      }).catch((err) => console.log(err))
+    }
   }
 
-  async function addTarefa(){
-    if(nomeNovaTarefa == "") return setErroInput(true)
-    if(descricaoNovaTarefa == "") return setErroInput(true)
-    await axios.post(`http://localhost:3333/tarefas`, {
-      nome: nomeNovaTarefa,
-      descricao: descricaoNovaTarefa,
-      data:dataNovaTarefa
-    }).then((response:AxiosResponse) => {
-      setNomeNovaTarefa("")
-      setDescricaoNovaTarefa("")
-      setDataNovaTarefa(new Date())
+  const DeleteTarefa = async(idTarefa:number) => {
+    await axios.delete(`http://localhost:3333/tarefas/${idTarefa}`).then((response:AxiosResponse) => {
       setUpdate(!update);
-      setModalCriarTarefa(false);
-      setErroInput(false)
-    }).catch((err) => console.log(err))
-  }
-
-  async function DeleteTarefa(id:Number){
-
-    await axios.delete(`http://localhost:3333/tarefas/${id}`).then((response:AxiosResponse) => {
-      setUpdate(!update);
+      setModalVisible(false);
     })
   }
 
-  async function UpdateTarefa() {
-    console.log(idNovaTarefa, nomeNovaTarefa, descricaoNovaTarefa, dataNovaTarefa.toString());
-    if(nomeNovaTarefa == "") return setErroInput(true)
-    if(descricaoNovaTarefa == "") return setErroInput(true)
+  const updateStatusTarefa = async(idTarefa:number, novoStatus:boolean) => {
+    console.log("UPDATE STATUS")
     await axios.put(`http://localhost:3333/tarefas`, {
-      id: idNovaTarefa,
-      nome: nomeNovaTarefa,
-      descricao: descricaoNovaTarefa,
-      data:dataNovaTarefa.toString()
+      id: idTarefa,
+      status: novoStatus
     }).then((response:AxiosResponse) => {
-      setNomeNovaTarefa("")
-      setDescricaoNovaTarefa("")
-      setDataNovaTarefa(new Date())
+      console.log("status trocado")
+    }).catch((err) => console.log("não deu", err))
+  }
+
+  const UpdateTarefa = async() => {
+    console.log("UPDATE TAREFA",idTarefa, nomeNovaTarefa, descricaoTarefa, dataTarefa);
+    await axios.put(`http://localhost:3333/tarefas`, {
+      id: idTarefa,
+      nome: nomeTarefa,
+      descricao: descricaoTarefa,
+      dataDefinida:dataTarefa
+    }).then((response:AxiosResponse) => {
+      setNomeTarefa("")
+      setDescricaoTarefa("")
+      setDataTarefa(undefined)
       setUpdate(!update);
-      setModalEditarTarefa(false);
-      setErroInput(false)
+      setModalVisible(false);
     }).catch((err) => console.log(err))
   }
 
   return (
     <Fragment>
-      <BoxEditar style={{visibility: modalEditarTarefa ? "visible" : "hidden"}}>
-        <Title>Editar Tarefa</Title>
-        <label>Nome:</label>
-        <input value={nomeNovaTarefa} onChange={e => setNomeNovaTarefa(e.target.value)} placeholder="Nome"/>
-        <label>Descrição:</label>
-        <input value={descricaoNovaTarefa} onChange={e => setDescricaoNovaTarefa(e.target.value)} placeholder="Descrição"/>
-        <label>Data:</label>
-        <DatePicker dateFormat="yyyy/MM/dd" selected={dataNovaTarefa} onChange={(date:Date) => setDataNovaTarefa(date)}/>
-        <Button onClick = {() => UpdateTarefa()}>Confirmar</Button>
-        <Button onClick = {() => closeModalUpdateTarefa()}>Cancelar</Button>
-        <p style={{color : "red", visibility: erroInput ? "visible" : "hidden"}}>Verifique se todos os campos estão preenchidos.</p>
-      </BoxEditar>
-      <BoxAdicionar style={{visibility: modalCriarTarefa ? "visible" : "hidden"}}>
-        <Title>Nova Tarefa</Title>
-        <label>Nome:</label>
-        <input value={nomeNovaTarefa} onChange={e => setNomeNovaTarefa(e.target.value)} placeholder="Nome"/>
-        <label>Descrição:</label>
-        <input value={descricaoNovaTarefa} onChange={e => setDescricaoNovaTarefa(e.target.value)} placeholder="Descrição"/>
-        <label>Data:</label>
-        <DatePicker dateFormat="yyyy/MM/dd" selected={dataNovaTarefa} onChange={(date:Date) => setDataNovaTarefa(date)}/>
-        <Button onClick = {() => addTarefa()}>Adicionar</Button>
-        <Button onClick = {() => closeModalAddTarefa()}>Cancelar</Button>
-        <p style={{color : "red", visibility: erroInput ? "visible" : "hidden"}}>Verifique se todos os campos estão preenchidos.</p>
-      </BoxAdicionar>
       <BoxListar>
         <Title>Tasks</Title>
+        <InputCriarTask 
+          placeholder="Digite uma nova Tarefa..." 
+          value={nomeNovaTarefa} 
+          onChange={(e) => setNomeNovaTarefa(e.target.value)} 
+          onKeyPress={(e: React.KeyboardEvent<HTMLDivElement>) => addTarefa(e)}/>
         <ListTask>{dados.map((tarefa:TypeTarefa) => {
           return (
-            <ContainerTask key={tarefa.id.toString()}>
-              {/* <input type="checkbox"></input> */}
-              <TaskTitle style={{color:"white"}}>{tarefa.nome}</TaskTitle>
-              <TaskTitle>{tarefa.descricao}</TaskTitle>
-              <TaskTitle style={{color:"gray"}}>{tarefa.data}</TaskTitle>
-              <Button onClick = {() => showModalUpdateTarefa(tarefa)}>Editar</Button>
-              <ButtonDelete onClick = {() => DeleteTarefa(tarefa.id)}>X</ButtonDelete>
-            </ContainerTask>
+            <ListItem key={tarefa.id.toString()} >
+              <CheckBoxList onChange={(e) => updateStatusTarefa(tarefa.id, e.target.checked)} defaultChecked={tarefa.status}></CheckBoxList>
+              <ContainerTask onClick={() => handleModal(tarefa)}>
+                <TaskTitle style={{color:"white"}}>{tarefa.nome}</TaskTitle>
+              </ContainerTask>
+              <ButtonDeleteTarefa onClick = {() => DeleteTarefa(tarefa.id)}><DeleteOutlined /></ButtonDeleteTarefa>
+            </ListItem>
           )
         })}</ListTask>
-        <ButtonCriar onClick={() => showModalAddTarefa()}>Criar tarefa</ButtonCriar>
       </BoxListar>
+      <ModalTask title="Editar Tarefa" visible={modalVisible} onOk={UpdateTarefa} onCancel={closeModal}>
+        <label>Tarefa:</label>
+        <Input
+          value={nomeTarefa}
+          onChange={(e) => {setNomeTarefa(e.target.value)}}
+        />
+        <label>Descricao:</label>
+        <Input 
+          placeholder="Digite..." 
+          value={descricaoTarefa}
+          onChange={(e) => {setDescricaoTarefa(e.target.value)}}
+        />
+        <label>Agende uma data:</label>
+        <Row>
+          <DatePicker
+            onChange={(date, dateString) => { setDataTarefa(dateString) }}
+            value={
+              dataTarefa === null ? dataTarefa: moment(dataTarefa) 
+            }
+            showTime={true}
+          />
+        </Row>
+      </ModalTask>
     </Fragment>
   )
 }
