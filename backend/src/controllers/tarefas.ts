@@ -3,16 +3,18 @@ import { connection } from '../database/connection';
 
 class Tarefas {
   async create(request: Request, response: Response) {
-    const { nome, descricao, data } = request.body;
+    const { nome, descricao, data, id_projeto } = request.body;
 
     if(nome == "" || nome == undefined) response.status(400);
     if(descricao == "" || descricao == undefined) response.status(400);
     if(data == "" || data == undefined) response.status(400);
+    if(id_projeto == "" || id_projeto == undefined) response.status(400);
 
     await connection('Tarefas').insert({
       nome,
       descricao,
-      data
+      data,
+      id_projeto
     }).then((dados) => {
       console.log(dados);
       return response.status(200).json(dados);
@@ -34,16 +36,16 @@ class Tarefas {
     });
   }
   async update(request: Request, response: Response) {
-    const { id, nome, descricao, data } = request.body
+    const { id, nome, descricao, data, id_projeto } = request.body
 
     if(nome == "" || nome == undefined) response.status(400);
     if(descricao == "" || descricao == undefined) response.status(400);
     if(data == "" || data == undefined) response.status(400);
     if(id == "" || id == undefined) response.status(400);
-
+    if(id_projeto == "" || id_projeto == undefined) response.status(400);
 
     await connection('Tarefas')
-      .where({ id }).update({ nome, descricao, data })
+      .where({ id }).update({ nome, descricao, data, id_projeto })
       .then((dados) => {
         if(dados){
           console.log(dados);
