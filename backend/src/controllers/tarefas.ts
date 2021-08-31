@@ -3,15 +3,19 @@ import { connection } from '../database/connection';
 
 class Tarefas {
   async create(request: Request, response: Response) {
-    const { nome } = request.body;
+    const { nome, descricao, data, id_projeto } = request.body;
 
-    if(nome === "" || nome === undefined) return response.status(400).json("ERRO: nome tarefa vazio");
+    if(nome == "" || nome == undefined) response.status(400);
+    if(descricao == "" || descricao == undefined) response.status(400);
+    if(data == "" || data == undefined) response.status(400);
+    if(id_projeto == "" || id_projeto == undefined) response.status(400);
 
     await connection('Tarefas').insert({
       nome,
-      descricao: "",
+      descricao,
       dataDefinida: null,
       status: false,
+      id_projeto
     }).then((dados) => {
       console.log(dados);
       return response.status(200).json(dados);
@@ -45,15 +49,16 @@ class Tarefas {
     });
   }
   async update(request: Request, response: Response) {
-    const { id, nome, descricao, dataDefinida, status } = request.body
+    const { id, nome, descricao, dataDefinida, status, id_projeto } = request.body
 
     console.log("UPDATE:", id, nome, descricao, dataDefinida, status);
 
     if(id == "" || id == undefined) return response.status(400).json();
     if(nome == "") return response.status(400).json();
+    if(id_projeto == "" || id_projeto == undefined) return response.status(400);
 
     await connection('Tarefas')
-      .where({ id }).update({ nome, descricao, dataDefinida, status })
+      .where({ id }).update({ nome, descricao, dataDefinida, status, id_projeto })
       .then((dados) => {
         if(dados){
           console.log(dados);
