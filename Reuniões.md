@@ -1,3 +1,5 @@
+1ª Sprint
+
 Dia 06/07/2021
 
 - O que eu farei hoje para ajudar o Time de Desenvolvimento atender a meta da Sprint?
@@ -49,3 +51,52 @@ da meta da Sprint?
 Lucas - Não.
 Victor - Não.
 Matheus - Não.
+
+2ª Sprint
+
+Dia 28/07/2021
+
+- O que eu farei hoje para ajudar o Time de Desenvolvimento atender a meta da Sprint?
+Lucas - Criação das histórias de usuários e transformação dessas histórias em issues referentes as tarefas.
+Victor - Criação das histórias de usuários e transformação dessas histórias em issues referentes as tarefas.
+Matheus - Criação das histórias de usuários e transformação dessas histórias em issues referentes as tarefas.
+
+- Eu vejo algum obstáculo que impeça a mim ou o Time de Desenvolvimento no atendimento
+da meta da Sprint?
+- Eu vejo algum obstáculo que impeça a mim ou o Time de Desenvolvimento no atendimento
+da meta da Sprint?
+Lucas - Não, para essa sprint discutimos sobre as issues a serem adicionadas, com base nos problemas enfrentados na 1ª Sprint.
+Victor - Não, creio que com a experiência obtida por meio da primeira sprint conseguiremos ajustar de forma mais assertiva nossas tarefas. Nessa sprint iremos deliberar sobre os elementos produzidos na sprint passada, além é claro de produzir novos elementos.
+Matheus - Não, por enquanto não vejo nenhum problema, para essa sprint vamos lapidar o que foi feito na primeira com adição de novas funcionalidades.
+
+Dia 04/08/2021
+
+- O que eu fiz ontem que ajudou o Time de Desenvolvimento a atender a meta da Sprint?
+Lucas, Victor e Matheus - Criamos as histórias de usuários e as transformamos em issues para a nova sprint.
+
+- O que eu farei hoje para ajudar o Time de Desenvolvimento atender a meta da Sprint?
+Lucas - Desenvolver o Menu de Projetos. #26
+Victor - Criar visualização por semana. #15
+Matheus - Refatoração do To Do List. #27
+
+- Eu vejo algum obstáculo que impeça a mim ou o Time de Desenvolvimento no atendimento
+da meta da Sprint?
+Lucas - Não.
+Victor - Não.
+Matheus - Não.
+
+3ª Sprint
+
+Dia 18/08/2021
+
+- O que eu farei hoje para ajudar o Time de Desenvolvimento atender a meta da Sprint?
+Lucas - Criação de issues e Criar o relacionamento entre Projetos e Tarefas #28.
+Victor - Criação de issues e Criar um filtro de datas para a semana atual #30.
+Matheus - Criação de issues e Criar uma rota com parâmetros para acesso pelo Menu #29.
+
+- Eu vejo algum obstáculo que impeça a mim ou o Time de Desenvolvimento no atendimento
+da meta da Sprint?
+Lucas - Falta de tempo.
+Victor - Falta de tempo.
+Matheus - Falta de tempo.
+
