@@ -6,6 +6,7 @@ import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
 import { Modal } from 'antd';
 import 'antd/dist/antd.css';
+import { useHistory } from 'react-router-dom';
 
 interface TypeProjeto{
     id: number;
@@ -13,6 +14,7 @@ interface TypeProjeto{
   }
 
 const MenuProjetos: React.FC = () => {
+    let history = useHistory();
     const [dados, setDados] = useState<TypeProjeto[]>([]);
     const [nomeNovoProjeto, setNomeNovoProjeto] = useState("");
     const [idNovoProjeto, setIdNovoProjeto] = useState<Number>();
@@ -94,16 +96,19 @@ const MenuProjetos: React.FC = () => {
           setErroInput(false)
         }).catch((err) => console.log(err))
       }
-
     return(
         <Fragment>
             <ProSidebar>
                 <Menu>
-                    <MenuItem >Semana</MenuItem>
+                    <MenuItem onClick={() => {
+                      history.push("/Semana")
+                    }} >Semana</MenuItem>
                         <SubMenu title="Projetos" > {dados.map((projeto:TypeProjeto) => {
                                 return(
                                     <ContainerProjeto key={projeto.id.toString()}>{
-                                        <MenuItem style = {{color : "white"}}>{projeto.nome}</MenuItem>}
+                                        <MenuItem style = {{color : "white"}} onClick={() => {
+                                          history.push(`/ToDoList/${projeto.id}`)
+                                        }}>{projeto.nome}</MenuItem>}
                                         <Button onClick={()=> showModalUpdateProjeto(projeto)}>Editar</Button>
                                         <Button onClick = {() => DeleteProjeto(projeto.id)}>X</Button>
                                     </ContainerProjeto>
