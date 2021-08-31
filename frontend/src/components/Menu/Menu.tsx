@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import axios, { AxiosResponse } from 'axios'
-import { Button, ButtonCriar, BoxEditar, BoxAdicionar, ContainerProjeto, Title, NomeProjeto } from "./MenuStyle"
+import { Button, ButtonCriar, BoxEditar, BoxAdicionar, ContainerProjeto, Title, NomeProjeto, Sidebar } from "./MenuStyle"
 import "react-datepicker/dist/react-datepicker.css";
 import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
@@ -97,7 +97,7 @@ const MenuProjetos: React.FC = () => {
 
     return(
         <Fragment>
-            <ProSidebar>
+            <Sidebar>
                 <Menu>
                     <MenuItem >Semana</MenuItem>
                         <SubMenu title="Projetos" > {dados.map((projeto:TypeProjeto) => {
@@ -112,7 +112,7 @@ const MenuProjetos: React.FC = () => {
                             <ButtonCriar onClick={() => showModalAddProjeto()}>Criar Projeto</ButtonCriar>
                         </SubMenu> 
                 </Menu>
-            </ProSidebar>
+            </Sidebar>
             <Modal title="Editar projeto" visible={modalEditarProjeto} onOk={()=> UpdateProjeto()} onCancel={closeModalUpdateProjeto}>
               <label style={{color : "black"}}> Nome:</label>
               <input value={nomeNovoProjeto} onChange={e => setNomeNovoProjeto(e.target.value)} placeholder="Nome"/>

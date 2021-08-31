@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { ProSidebar } from 'react-pro-sidebar';
 
 export const BoxEditar = styled.div`
   position: absolute;
@@ -127,4 +128,8 @@ export const NomeProjeto = styled.input`
   font-size: 14px;
   border: dimgray;
 
+`
+export const Sidebar = styled(ProSidebar)`
+  $sidebar-width: 20% !default;
+  $sidebar-collapsed-width: 80px !default;
 `
